@@ -138,14 +138,20 @@ const Router = () => {
 
   const onAddChat = (chatName) => {
     const id = generateId();
-    const newState = {
+    const newChat = {id: id, title: chatName, messages:[], draft: ''};
+
+    const newState = produce(state, (draftState) => {
+      draftState.chats[id] = newChat;
+      draftState.currentPage = { type: "chat", currentChatId: id };
+    });
+  /*  const newState = {
       ...state,
       chats: {
         ...state.chats,
         [id]: { title: chatName, id: id, messages: [], draft: "" },
       },
       currentPage: { type: "chat", currentChatId: id },
-    };
+    };*/
     setState(newState);
   };
 
