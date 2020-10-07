@@ -119,6 +119,7 @@ const Router = () => {
       draftState.chats[draftState.currentPage.currentChatId].messages.push(
         newMessage
       );
+      draftState.chats[draftState.currentPage.currentChatId].draft = "";
     });
 
     setState(newState);

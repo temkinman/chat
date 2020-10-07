@@ -33,7 +33,7 @@ const Chat = ({
       </ul>
 
       <form onSubmit={onSendMessagehandle}>
-        <input type="text" onChange={onChangeHadle} />
+        <input type="text" onChange={onChangeHadle} value={currentChat.draft} />
         <button type="submit">send</button>
       </form>
     </div>
