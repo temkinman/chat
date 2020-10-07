@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+p {
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 1200px;
+    justify-content: center;
+}
+
+.chatList, .info {
+    flex-grow: 1;
+    background-color: darkkhaki;
+    max-width: 30%;
+}
+
+.chatList-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem;
+}
+
+.logo {
+    width: 45px;
+    margin-right: 0.9rem;
+}
+
+.title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    font-family: Lemon-Milk;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2rem;
+    background-color: #f3f6fb;
+    margin: 2rem;
+    border-radius: 20px;
+    height: 250px;
+}
+
+.avatar {
+    height: 105px;
+    width: 105px;
+    border-radius: 20%;
+    padding-bottom: 1.3rem;
+}
+
+.name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-right: 0.4rem;
+}
+
+.messages {
+    flex-grow: 2;
+    background-color: #f3f6fb;
+}
+
+.userProfile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.settings {
+    width: 18px;
+    cursor: pointer;
+}
+
+.profession {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.status {
+    padding-top: 0.8rem;
+}
