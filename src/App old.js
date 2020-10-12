@@ -4,10 +4,6 @@ import "./App.css";
 import ChatList from "./Chatlist";
 import Chat from "./Chat";
 import AddChat from "./AddChat";
-import "./styles/styles.css";
-import ChatListHeader from "./Components/ChatList/ChatListHeader";
-import Contacts from "./Components/Contacts/Contacts";
-import Messages from "./Components/Messages/Messages";
 
 const initialState = {
   userProfile: {
@@ -143,13 +139,13 @@ const Router = () => {
 
   const onAddChat = (chatName) => {
     const id = generateId();
-    const newChat = { id: id, title: chatName, messages: [], draft: "" };
+    const newChat = {id: id, title: chatName, messages:[], draft: ''};
 
     const newState = produce(state, (draftState) => {
       draftState.chats[id] = newChat;
       draftState.currentPage = { type: "chat", currentChatId: id };
     });
-    /*  const newState = {
+  /*  const newState = {
       ...state,
       chats: {
         ...state.chats,
@@ -160,36 +156,26 @@ const Router = () => {
     setState(newState);
   };
 
-  // return state.currentPage.type === "chat" ? (
-  //   <Chat
-  //     currentChat={currentChat}
-  //     onBack={onBack}
-  //     onSendMessage={onSendMessage}
-  //     onDraftChange={onDraftChange}
-  //     getTime={getTime}
-  //   />
-  // ) : state.currentPage.type === "chatList" ? (
-  //   <div>
-  //     <ChatList
-  //       chats={state.chats}
-  //       onViewChat={onViewChat}
-  //       onGoToAddChat={onGoToAddChat}
-  //     />
-  //   </div>
-  // ) : state.currentPage.type === "addChat" ? (
-  //   <AddChat onBack={onBack} onAddChat={onAddChat} />
-  // ) : (
-  //   <div>page not found</div>
-  // );
-
-  return (
-    <div className="container">
-      <div className="chatList">
-        <ChatListHeader />
-        <Contacts chats={state.chats} currentPage={state.currentPage} />
-      </div>
-      <Messages />
+  return state.currentPage.type === "chat" ? (
+    <Chat
+      currentChat={currentChat}
+      onBack={onBack}
+      onSendMessage={onSendMessage}
+      onDraftChange={onDraftChange}
+      getTime={getTime}
+    />
+  ) : state.currentPage.type === "chatList" ? (
+    <div>
+      <ChatList
+        chats={state.chats}
+        onViewChat={onViewChat}
+        onGoToAddChat={onGoToAddChat}
+      />
     </div>
+  ) : state.currentPage.type === "addChat" ? (
+    <AddChat onBack={onBack} onAddChat={onAddChat} />
+  ) : (
+    <div>page not found</div>
   );
 };
 

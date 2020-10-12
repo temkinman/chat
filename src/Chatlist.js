@@ -1,9 +1,11 @@
 import React from "react";
+import ContactItem from './Components/Contacts/ContactItem/ContactItem'
 
 const ChatList = ({ chats, onViewChat, onGoToAddChat }) => {
 
   return (
     <div>
+      <ContactItem />
       <button onClick={onGoToAddChat}>add new chat</button>
       <ul>
         {Object.values(chats).map((chat) => (
