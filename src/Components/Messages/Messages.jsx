@@ -1,13 +1,18 @@
 import React from "react";
 import UserMessage from "./UserMessage";
 import SendMessage from "./SendMessage";
+import s from './Messages.module.css'
 
-const Messages = () => {
+const NoSelectedChat = () => {
+  return <h1 className={s.notSelectedChannel}>Choice contact, wich you will write</h1>
+}
+
+const Messages = ({currentPage}) => {
   return (
-    <div className="messages-block">
-      <p class="current-chat-name">currentChatName</p>
-      <div className="messages">
-        <UserMessage />
+    <div className={s.messagesBlock}>
+      <p class={s.currentChatName}>currentChatName</p>
+      <div className={s.messages}>
+        {currentPage === null ? <NoSelectedChat />: <UserMessage />}
       </div>
       <SendMessage />
     </div>

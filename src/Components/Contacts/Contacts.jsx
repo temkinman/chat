@@ -1,31 +1,22 @@
 import React from "react";
 import ContactItem from "./ContactItem/ContactItem";
 
-const Contacts = ({ chats, currentPage }) => {
-  console.log(chats);
-  console.log(currentPage);
+const Contacts = ({ chats, currentPage, onViewChat }) => {
+  
   return (
     <div className="contacts">
       <ul className="contacts-list">
         {Object.values(chats).map((chat) => (
-            <ContactItem key={chat.id} />
-          <li
-            key={chat.id}
-            onClick={() => {
-              onViewChat(chat.id);
-            }}
-          >
-            {chat.title}
-          </li>
+          <ContactItem key={chat.id} id={chat.id} title={chat.title} onViewChat={onViewChat} />
+          // <li
+          //   key={chat.id}
+          //   onClick={() => {
+          //     onViewChat(chat.id);
+          //   }}
+          // >
+          //   {chat.title}
+          // </li>
         ))}
-        <ContactItem />
-        <ContactItem />
-        <ContactItem />
-        <ContactItem />
-        <ContactItem />
-        <ContactItem />
-        <ContactItem />
-        <ContactItem />
       </ul>
     </div>
   );

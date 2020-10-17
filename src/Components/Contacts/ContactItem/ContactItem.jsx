@@ -1,18 +1,14 @@
 import React from "react";
-import style from "./ContactItem.module.css";
-import avatarMale from '../../../images/faces/male-default-avatar.png'
-import avatarMan from '../../../images/faces/man-default-avatar.png'
+import avatarMale from "../../../images/faces/male-default-avatar.png";
+import avatarMan from "../../../images/faces/man-default-avatar.png";
+import s from "./ContactItem.module.css";
 
-const ContactItem = () => {
+const ContactItem = ({ id, title, onViewChat }) => {
   return (
-    <li className={style.item}>
-      <img
-        className={style.avatar}
-        src={avatarMale}
-        alt=""
-      />
-      <span className={style.name}>John Smith</span>
-      <span className={style.unreadMessage}>3</span>
+    <li className={s.item} onClick={() => onViewChat(id)}>
+      <img className={s.avatar} src={avatarMale} alt="" />
+      <span className={s.name}>{title}</span>
+      <span className={s.unreadMessage}>3</span>
     </li>
   );
 };

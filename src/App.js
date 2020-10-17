@@ -186,9 +186,13 @@ const Router = () => {
     <div className="container">
       <div className="chatList">
         <ChatListHeader />
-        <Contacts chats={state.chats} currentPage={state.currentPage} />
+        <Contacts
+          chats={state.chats}
+          currentPage={state.currentPage}
+          onViewChat={onViewChat}
+        />
       </div>
-      <Messages />
+      <Messages currentPage={state.currentPage.currentChatId} />
     </div>
   );
 };

@@ -1,0 +1,31 @@
+.messagesBlock {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  background-color: #f5f9fd;
+}
+.currentChatName {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 5px 15px;
+  color: #ffffff;
+  background-color: #5b6978;
+}
+
+.messages {
+  display: flex;
+  overflow: auto;
+  margin-top: auto;
+  flex-direction: column-reverse;
+  max-height: 104vh;
+  padding: 10px 0;
+}
+
+.notSelectedChannel {
+  position: fixed;
+  top: 50%;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+}
