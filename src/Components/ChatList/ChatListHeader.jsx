@@ -5,8 +5,8 @@ import s from './ChatList.module.css'
 const ChatListHeader = () => {
   return (
     <div className={s.chatListTop}>
-      <img class={s.logo} src={logo} alt="" />
-      <span class={s.title}>QuickChat</span>
+      <img className={s.logo} src={logo} alt="" />
+      <span className={s.title}>QuickChat</span>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const AddChat = ({ onBack, onAddChat }) => {
+const AddContact = ({ isOpen, onCancel, onAddContact }) => {
   const [chatName, setchatName] = useState("");
 
   const onChangeHadle = (event) => {
@@ -10,11 +10,11 @@ const AddChat = ({ onBack, onAddChat }) => {
 
   const onAddChathandle = (event) => {
     event.preventDefault();
-    onAddChat(chatName);
+    onAddContact(chatName);
   }
   return (
     <div>
-      <button onClick={onBack}>{`<`}</button>
+      {/* <button onClick={onBack}>{`<`}</button> */}
       <form onSubmit={onAddChathandle}>
         <input type="text" onChange={onChangeHadle} />
         <button type="submit">add</button>
@@ -23,4 +23,4 @@ const AddChat = ({ onBack, onAddChat }) => {
   );
 };
 
-export default AddChat;
+export default AddContact;

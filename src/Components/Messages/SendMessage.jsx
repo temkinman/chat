@@ -1,14 +1,27 @@
-import React from "react";
+import React, {useState} from "react";
 
-const SendMessage = () => {
+const SendMessage = ({onSendMessage, onDraftChange, draftText}) => {
+
+  const onSendMessageHandle = (event) => {
+    event.preventDefault();
+    onSendMessage();
+  }
+
+  const onInputText = (event) => {
+    const newText = event.currentTarget.value;
+    onDraftChange(newText);
+  }
+
   return (
-    <form action="" class="send-message">
+    <form action="" className="send-message" onSubmit={onSendMessageHandle}>
       <input
-        class="send-text"
+        className="send-text"
         type="text"
         placeholder="Enter your message here"
+        onChange={onInputText}
+        value={draftText}
       />
-      <button class="send-btn" type="submit">
+      <button className="send-btn" type="submit">
         send
       </button>
     </form>

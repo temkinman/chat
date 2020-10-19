@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import produce from "immer";
 import "./App.css";
-import ChatList from "./Chatlist";
-import Chat from "./Chat";
-import AddChat from "./AddChat";
 import "./styles/styles.css";
 import ChatListHeader from "./Components/ChatList/ChatListHeader";
 import Contacts from "./Components/Contacts/Contacts";
 import Messages from "./Components/Messages/Messages";
+import ContactControls from './Components/ContactsControls/ContactControls'
 
 const initialState = {
   userProfile: {
@@ -60,6 +58,26 @@ const initialState = {
     type: "chatList",
     currentChatId: null,
   },
+
+  getTime: (isoTime) => {
+    const time = new Date(isoTime);
+
+    return `${time.getHours()}:${time
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  },
+
+  getFullTime: (isoTime) => {
+    const time = new Date(isoTime);
+
+    return `${time.getHours()}:${time
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")} ${time.getDate()} ${
+      months[time.getMonth()]
+    } ${time.getFullYear()}г.`;
+  },
 };
 
 const months = [
@@ -77,20 +95,9 @@ const months = [
   "декабря",
 ];
 
-const getTime = (isoTime) => {
-  const time = new Date(isoTime);
-
-  return `${time.getHours()}:${time
-    .getMinutes()
-    .toString()
-    .padStart(2, "0")} ${time.getDate()} ${
-    months[time.getMonth()]
-  } ${time.getFullYear()}г.`;
-};
-
-// const generateMessageId = () => (Math.random() * 100000).toString();
-
 const generateId = () => (Math.random() * 100000).toString();
+
+export const StateContext = React.createContext();
 
 const Router = () => {
   const [state, setState] = useState(initialState);
@@ -183,17 +190,20 @@ const Router = () => {
   // );
 
   return (
-    <div className="container">
-      <div className="chatList">
-        <ChatListHeader />
-        <Contacts
-          chats={state.chats}
-          currentPage={state.currentPage}
-          onViewChat={onViewChat}
-        />
+    <StateContext.Provider value={state}>
+      <div className="container">
+        <div className="chatList">
+          <ChatListHeader />
+          {/* <ContactControls /> */}
+          <Contacts
+            chats={state.chats}
+            onViewChat={onViewChat}
+            currentChatId={state.currentPage.currentChatId}
+          />
+        </div>
+        <Messages onSendMessage={onSendMessage} onDraftChange={onDraftChange} />
       </div>
-      <Messages currentPage={state.currentPage.currentChatId} />
-    </div>
+    </StateContext.Provider>
   );
 };
 
