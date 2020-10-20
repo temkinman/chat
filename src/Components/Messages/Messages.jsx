@@ -3,39 +3,29 @@ import UserMessage from "./UserMessage";
 import SendMessage from "./SendMessage";
 import s from "./Messages.module.css";
 import { StateContext } from "../../App";
-import NoSelectedChat from "./NoSelectedChat";
 
-const Messages = ({ onSendMessage, onDraftChange }) => {
+const Messages = ({ onSendMessage, onDraftChange, getTime }) => {
   const contextData = useContext(StateContext);
   const currentChat = contextData.currentPage.currentChatId;
-  let messages = [];
-  let draftText = "";
-  let currentChatName = "";
-
-  if (currentChat !== null) {
-    messages = contextData.chats[currentChat].messages;
-    draftText = contextData.chats[currentChat].draft;
-    currentChatName = contextData.chats[currentChat].title;
-  }
+  const activeChat = contextData.chats[currentChat];
+  
+  const messages = activeChat.messages;
+  const draftText = activeChat.draft;
+  const currentChatName = activeChat.title;
 
   return (
     <div className={s.messagesBlock}>
       <p className={s.currentChatName}>{currentChatName}</p>
       <div className={s.messages}>
-        {currentChat === null ? (
-          <NoSelectedChat />
-        ) : (
-          messages.map((_, ind, messages) => {
-            const item = messages[messages.length - 1 - ind];
-            return (
-              <UserMessage
-                key={item.messageId}
-                message={item}
-                getTime={contextData.getTime}
-              />
-            );
-          })
-        )}
+        {messages.map((message) => {
+          return (
+            <UserMessage
+              key={message.messageId}
+              message={message}
+              getTime={getTime}
+            />
+          );
+        })}
       </div>
       <SendMessage
         onSendMessage={onSendMessage}

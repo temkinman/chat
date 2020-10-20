@@ -1,11 +1,15 @@
 import React, { useState, useContext } from "react";
+import { BrowserRouter, Route } from "react-router-dom";
 import produce from "immer";
 import "./App.css";
 import "./styles/styles.css";
 import ChatListHeader from "./Components/ChatList/ChatListHeader";
 import Contacts from "./Components/Contacts/Contacts";
 import Messages from "./Components/Messages/Messages";
-import ContactControls from './Components/ContactsControls/ContactControls'
+import ContactControls from "./Components/ContactsControls/ContactControls";
+import NoSelectedChat from "./Components/Messages/NoSelectedChat";
+import s from "./Components/Messages/Messages.module.css";
+import AddContact from "./Components/AddContact/AddContact";
 
 const initialState = {
   userProfile: {
@@ -58,26 +62,6 @@ const initialState = {
     type: "chatList",
     currentChatId: null,
   },
-
-  getTime: (isoTime) => {
-    const time = new Date(isoTime);
-
-    return `${time.getHours()}:${time
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}`;
-  },
-
-  getFullTime: (isoTime) => {
-    const time = new Date(isoTime);
-
-    return `${time.getHours()}:${time
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")} ${time.getDate()} ${
-      months[time.getMonth()]
-    } ${time.getFullYear()}г.`;
-  },
 };
 
 const months = [
@@ -127,7 +111,7 @@ const Router = () => {
     };
 
     const newState = produce(state, (draftState) => {
-      draftState.chats[draftState.currentPage.currentChatId].messages.push(
+      draftState.chats[draftState.currentPage.currentChatId].messages.unshift(
         newMessage
       );
       draftState.chats[draftState.currentPage.currentChatId].draft = "";
@@ -167,43 +151,56 @@ const Router = () => {
     setState(newState);
   };
 
-  // return state.currentPage.type === "chat" ? (
-  //   <Chat
-  //     currentChat={currentChat}
-  //     onBack={onBack}
-  //     onSendMessage={onSendMessage}
-  //     onDraftChange={onDraftChange}
-  //     getTime={getTime}
-  //   />
-  // ) : state.currentPage.type === "chatList" ? (
-  //   <div>
-  //     <ChatList
-  //       chats={state.chats}
-  //       onViewChat={onViewChat}
-  //       onGoToAddChat={onGoToAddChat}
-  //     />
-  //   </div>
-  // ) : state.currentPage.type === "addChat" ? (
-  //   <AddChat onBack={onBack} onAddChat={onAddChat} />
-  // ) : (
-  //   <div>page not found</div>
-  // );
+  const getTime = (isoTime) => {
+    const time = new Date(isoTime);
+
+    return `${time.getHours()}:${time
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  const getFullTime = (isoTime) => {
+    const time = new Date(isoTime);
+
+    return `${time.getHours()}:${time
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")} ${time.getDate()} ${
+      months[time.getMonth()]
+    } ${time.getFullYear()}г.`;
+  };
 
   return (
-    <StateContext.Provider value={state}>
-      <div className="container">
-        <div className="chatList">
-          <ChatListHeader />
-          {/* <ContactControls /> */}
-          <Contacts
-            chats={state.chats}
-            onViewChat={onViewChat}
-            currentChatId={state.currentPage.currentChatId}
-          />
+    <BrowserRouter>
+      <StateContext.Provider value={state}>
+        <div className="container">
+          <div className="chatList">
+            <ChatListHeader />
+            {/* <ContactControls /> */}
+            <Contacts
+              chats={state.chats}
+              onViewChat={onViewChat}
+              currentChatId={state.currentPage.currentChatId}
+            />
+          </div>
+          {/* <Route path='/addcontact' component={AddContact} /> */}
+          {state.currentPage.currentChatId === null ? (
+            <div className={s.messagesBlock}>
+              <div className={s.messages}>
+                <NoSelectedChat />
+              </div>
+            </div>
+          ) : (
+            <Messages
+              onSendMessage={onSendMessage}
+              onDraftChange={onDraftChange}
+              getTime={getTime}
+            />
+          )}
         </div>
-        <Messages onSendMessage={onSendMessage} onDraftChange={onDraftChange} />
-      </div>
-    </StateContext.Provider>
+      </StateContext.Provider>
+    </BrowserRouter>
   );
 };
 

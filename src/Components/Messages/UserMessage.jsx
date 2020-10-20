@@ -7,7 +7,10 @@ const UserMessage = ({ message, getTime }) => {
     <div>
       <div className="owner">
         <img className="contacts-avatar" src={avatarMan} alt="" />
-        <p className="text-owner">{message.text} <span className="time-message-owner">{getTime(message.time)}</span></p>
+        <p className="text-owner">
+          {message.text}{" "}
+          <span className="time-message-owner">{getTime(message.time)}</span>
+        </p>
       </div>
       {/* <span className="time-message-owner">{getTime(message.time)}</span> */}
     </div>

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 const AddContact = ({ isOpen, onCancel, onAddContact }) => {
-  const [chatName, setchatName] = useState("");
+  const [chatName, setСhatName] = useState("");
 
   const onChangeHadle = (event) => {
     const name = event.currentTarget.value;
-    setchatName(name);
+    setСhatName(name);
   };
 
   const onAddChathandle = (event) => {
@@ -19,6 +19,7 @@ const AddContact = ({ isOpen, onCancel, onAddContact }) => {
         <input type="text" onChange={onChangeHadle} />
         <button type="submit">add</button>
       </form>
+      <h1>add contact</h1>
     </div>
   );
 };

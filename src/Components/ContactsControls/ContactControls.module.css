@@ -1,0 +1,9 @@
+.contactsControl {
+    display: flex;
+    justify-content: center;
+}
+
+.link, .link:hover{
+    text-decoration: none;
+    color: wheat;
+}

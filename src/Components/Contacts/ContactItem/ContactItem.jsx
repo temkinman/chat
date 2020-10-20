@@ -3,8 +3,8 @@ import avatarMale from "../../../images/faces/male-default-avatar.png";
 import avatarMan from "../../../images/faces/man-default-avatar.png";
 import s from "./ContactItem.module.css";
 
-const ContactItem = ({ id, title, onViewChat, activeChat }) => {
-  const styleContact = `${s.item} ${activeChat}`;
+const ContactItem = ({ id, title, onViewChat, isChatActive }) => {
+  const styleContact = `${s.item} ${isChatActive ? 'active' : ''}`;
   return (
     <li className={styleContact} onClick={() => onViewChat(id)}>
       <img className={s.avatar} src={avatarMale} alt="" />
