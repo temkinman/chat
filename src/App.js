@@ -176,8 +176,12 @@ const Router = () => {
       <StateContext.Provider value={state}>
         <div className="container">
           <div className="chatList">
-            <ChatListHeader />
-            {/* <ContactControls /> */}
+            {/* <ChatListHeader /> */}
+            <Route path='/' component={ChatListHeader}/>
+            {/* <Route path='/' component={Contacts }/> */}
+            <ContactControls />
+            {/* <Route path='/addcontact' component={AddContact}/> */}
+            {/* <Route path='/addcontact' component={AddContact}/> */}
             <Contacts
               chats={state.chats}
               onViewChat={onViewChat}

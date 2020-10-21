@@ -1,7 +1,7 @@
 import React from "react";
 
 const AddContact = () => {
-  return <div className="modal-dialog modal-dialog-centered">sdgsdgsdgdg</div>;
+  return <div className="modal-dialog modal-dialog-centered">dfghsdgsdgsdgdg</div>;
 //   return(
 //     <div class="modal" tabindex="-1">
 //     <div class="modal-dialog">
