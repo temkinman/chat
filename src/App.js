@@ -6,7 +6,7 @@ import "./styles/styles.css";
 import ChatListHeader from "./Components/ChatList/ChatListHeader";
 import Contacts from "./Components/Contacts/Contacts";
 import Messages from "./Components/Messages/Messages";
-import ContactControls from "./Components/ContactsControls/ContactControls";
+import ContactControl from "./Components/ContactControl/ContactControl";
 import NoSelectedChat from "./Components/Messages/NoSelectedChat";
 import s from "./Components/Messages/Messages.module.css";
 import AddContact from "./Components/AddContact/AddContact";
@@ -171,24 +171,36 @@ const Router = () => {
     } ${time.getFullYear()}г.`;
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+  const onOpenAddChat = () => {
+    setIsOpen(true);
+  };
+
+  const onCloseAddChat = () => {
+    setIsOpen(false);
+  };
+
   return (
     <BrowserRouter>
       <StateContext.Provider value={state}>
         <div className="container">
           <div className="chatList">
-            {/* <ChatListHeader /> */}
-            <Route path='/' component={ChatListHeader}/>
-            {/* <Route path='/' component={Contacts }/> */}
-            <ContactControls />
-            {/* <Route path='/addcontact' component={AddContact}/> */}
-            {/* <Route path='/addcontact' component={AddContact}/> */}
+            {/* <Route path='/' component={ChatListHeader}/> */}
+            <ChatListHeader />
+            <ContactControl onOpenAddChat={onOpenAddChat} />
             <Contacts
               chats={state.chats}
               onViewChat={onViewChat}
               currentChatId={state.currentPage.currentChatId}
             />
           </div>
-          {/* <Route path='/addcontact' component={AddContact} /> */}
+          <Route path="/addcontact" component={AddContact} />
+          <AddContact
+            open={isOpen}
+            onClose={onCloseAddChat}
+            onAddChat={onAddChat}
+          />
+
           {state.currentPage.currentChatId === null ? (
             <div className={s.messagesBlock}>
               <div className={s.messages}>

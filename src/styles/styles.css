@@ -148,7 +148,7 @@ ul {
   color: #afaeae;
 }
 
-.unread-message {
+/* .unread-message {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -160,7 +160,7 @@ ul {
   font-size: 1rem;
   width: 10px;
   height: 10px;
-}
+} */
 
 
 
