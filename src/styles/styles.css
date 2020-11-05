@@ -227,42 +227,6 @@ ul {
   margin-top: 3px; */
 }
 
-.send-message {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0px auto;
-  width: 100%;
-  padding: 0px;
-}
-
-.send-text {
-  width: 70%;
-  height: 27px;
-  border: 2px solid #c7c5c5;
-  border-radius: 5px;
-  padding: 3px 15px;
-  color: #333535;
-  font-size: 1rem;
-  font-family: serif;
-  margin-right: 10px;
-}
-
-.send-btn {
-  height: 37px;
-  border-radius: 5px;
-  width: 75px;
-  font-size: 0.9rem;
-  font-weight: bold;
-  font-family: serif;
-}
-
-.send-btn:hover {
-  cursor: pointer;
-  background-color: #20427d;
-  color: #cbc5c5;
-}
-
 /*end messages block*/
 
 /*scroll bar start*/

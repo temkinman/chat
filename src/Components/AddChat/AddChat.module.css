@@ -27,9 +27,10 @@
 
 .body {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: center;
   padding: 20px;
+  
 }
 
 .footer {
@@ -41,17 +42,14 @@
 .btn {
   color: #a19c9c;
   background-color: #42464a;
-}
-
-.okBtn {
-  margin-right: 0.5rem;
+  font-size: 1.3rem;
 }
 
 .close {
   border: 0;
 }
 
-.nameContact {
+.nameChat {
   margin-right: 0.5rem;
 }
 
@@ -62,4 +60,19 @@
   border-left-style: hidden;
   border-bottom-style: groove;
   background-color: #eee;
+  margin-top: 0.5rem;
+  padding: 5px 10px;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 1400px) {
+  .modal {
+    width: 30%;
+  }
+}
+
+@media (max-width: 900px) {
+  .modal {
+    width: 35%;
+  }
 }

@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import s from './SendMessage.module.css';
 
 const SendMessage = ({onSendMessage, onDraftChange, draftText}) => {
 
@@ -13,15 +14,15 @@ const SendMessage = ({onSendMessage, onDraftChange, draftText}) => {
   }
 
   return (
-    <form action="" className="send-message" onSubmit={onSendMessageHandle}>
+    <form action="" className={s.sendMessage} onSubmit={onSendMessageHandle}>
       <input
-        className="send-text"
+        className={s.sendText}
         type="text"
         placeholder="Enter your message here"
         onChange={onInputText}
         value={draftText}
       />
-      <button className="send-btn" type="submit">
+      <button className={s.sendBtn} type="submit">
         send
       </button>
     </form>

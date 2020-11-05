@@ -1,12 +1,12 @@
 import React from "react";
 import avatarMale from "../../../images/faces/male-default-avatar.png";
 import avatarMan from "../../../images/faces/man-default-avatar.png";
-import s from "./ContactItem.module.css";
+import s from "./Chat.module.css";
 
-const ContactItem = ({ id, title, onViewChat, isChatActive }) => {
+const Chat = ({ id, title, isChatActive, dispatch, viewChatAction }) => {
   const styleContact = `${s.item} ${isChatActive ? 'active' : ''}`;
   return (
-    <li className={styleContact} onClick={() => onViewChat(id)}>
+    <li className={styleContact} onClick={() => dispatch(viewChatAction(id))}>
       <img className={s.avatar} src={avatarMale} alt="" />
       <span className={s.name}>{title}</span>
       <span className={s.unreadMessage}>3</span>
@@ -14,4 +14,4 @@ const ContactItem = ({ id, title, onViewChat, isChatActive }) => {
   );
 };
 
-export default ContactItem;
+export default Chat;

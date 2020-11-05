@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ReactDom from "react-dom";
-import s from "./AddContact.module.css";
+import s from "./AddChat.module.css";
 
-const AddContact = ({ open, onClose, onAddChat }) => {
+const AddChat = ({ open, onClose, onAddChat }) => {
   const [titleChat, setTitleChat] = useState("");
 
   const onChangeInput = (event) => {
@@ -27,17 +27,17 @@ const AddContact = ({ open, onClose, onAddChat }) => {
   return ReactDom.createPortal(
     <>
       <div className={s.overlay} onClick={onClose}></div>
-      <form action="" className={s.modal} onSubmit={onAddChatHandle}>
+      <form className={s.modal} onSubmit={onAddChatHandle}>
         <div className={s.header}>
           <button className={s.close} onClick={onClose}>{"\u00D7"}</button>
         </div>
         <div className={s.body}>
-          <span className={s.nameContact}>contact name</span>
+          <span className={s.nameChat}>contact name</span>
           <input className={s.nameInput} placeholder="enter name" onChange={onChangeInput}></input>
         </div>
         <div className={s.footer}>
-          <button type="submit" className={s.okBtn}>ok</button>
-          <button onClick={onClose}>cancel</button>
+          <button type="submit" className={s.btn}>ok</button>
+          <button onClick={onClose} className={s.btn}>cancel</button>
         </div>
       </form>
     </>,
@@ -45,4 +45,4 @@ const AddContact = ({ open, onClose, onAddChat }) => {
   );
 };
 
-export default AddContact;
+export default AddChat;

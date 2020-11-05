@@ -1,0 +1,1 @@
+export const VIEW_CHAT = 'VIEW_CHAT';
