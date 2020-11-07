@@ -2,12 +2,11 @@ import React, { useContext } from "react";
 import UserMessage from "./UserMessage";
 import SendMessage from "./SendMessage";
 import s from "./Messages.module.css";
-import { StateContext } from "../../App";
+import {useSelector} from 'react-redux'
 
 const Messages = ({ onSendMessage, onDraftChange, getTime }) => {
-  const contextData = useContext(StateContext);
-  const currentChat = contextData.currentPage.currentChatId;
-  const activeChat = contextData.chats[currentChat];
+  const currentChat = useSelector(state => state.currentChatId);
+  const activeChat = useSelector(state => state.chats)[currentChat];
   
   const messages = activeChat.messages;
   const draftText = activeChat.draft;

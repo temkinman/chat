@@ -10,12 +10,8 @@ import ContactControl from "./Components/ChatControl/ChatControl";
 import NoSelectedChat from "./Components/Messages/NoSelectedChat";
 import s from "./Components/Messages/Messages.module.css";
 import AddChat from "./Components/AddChat/AddChat";
-import rootReducer from "./reducers/rootReducer";
-import { createStore } from "redux";
-import { Provider } from "react-redux";
-import initialState from './redux/store'
-
-
+import {  useSelector } from "react-redux";
+// import initialState from "./redux/store";
 
 const months = [
   "января",
@@ -34,8 +30,7 @@ const months = [
 
 const generateId = () => (Math.random() * 100000).toString();
 
-const store = createStore(rootReducer);
-console.log('store', store.getState());
+
 
 export const StateContext = React.createContext();
 
@@ -57,23 +52,10 @@ const getFullTime = (isoTime) => {
 };
 
 const Router = () => {
-  const [state, setState] = useState(initialState);
+  const state = useSelector(state => state);
+  // const [state, setState] = useState(initialState);
   // const state = store.getState();
-  console.log('state!!! ', state )
   const currentChat = state.chats[state.currentChatId];
-
-  // const onViewChat = (chatId) => {
-  //   const newState = {
-  //     ...state,
-  //     currentPage: { type: "chat", currentChatId: chatId },
-  //   };
-  //   setState(newState);
-  // };
-
-  // const onBack = () => {
-  //   const newState = { ...state, currentPage: { type: "chatList" } };
-  //   setState(newState);
-  // };
 
   const onSendMessage = () => {
     if (currentChat.draft === "") return;
@@ -92,7 +74,7 @@ const Router = () => {
       draftState.chats[draftState.currentPage.currentChatId].draft = "";
     });
 
-    setState(newState);
+    // setState(newState);
   };
 
   const onDraftChange = (text) => {
@@ -104,7 +86,7 @@ const Router = () => {
 
   const onGoToAddChat = () => {
     const newState = { ...state, currentPage: { type: "addChat" } };
-    setState(newState);
+    // setState(newState);
   };
 
   const onAddChat = (chatName) => {
@@ -123,7 +105,7 @@ const Router = () => {
       },
       currentPage: { type: "chat", currentChatId: id },
     };*/
-    setState(newState);
+    // setState(newState);
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -137,42 +119,36 @@ const Router = () => {
 
   return (
     <BrowserRouter>
-      <Provider store={store}>
-        {/* <StateContext.Provider value={state}> */}
-          <div className="container">
-            <div className="chatList">
-              {/* <Route path='/' component={ChatListHeader}/> */}
-              <ChatListHeader />
-              <ContactControl onOpenAddChat={onOpenAddChat} />
-              <Chats
-              //chats={state.chats}
-              //onViewChat={onViewChat}
-              //currentChatId={state.currentPage.currentChatId}
-              />
-            </div>
-            <Route path="/addcontact" AddChat />
-            <AddChat
-              open={isOpen}
-              onClose={onCloseAddChat}
-              onAddChat={onAddChat}
-            />
+      {/* <StateContext.Provider value={state}> */}
+      <div className="container">
+        <div className="chatList">
+          {/* <Route path='/' component={ChatListHeader}/> */}
+          <ChatListHeader />
+          <ContactControl onOpenAddChat={onOpenAddChat} />
+          <Chats
+          //chats={state.chats}
+          //onViewChat={onViewChat}
+          //currentChatId={state.currentPage.currentChatId}
+          />
+        </div>
+        <Route path="/addcontact" AddChat />
+        <AddChat open={isOpen} onClose={onCloseAddChat} onAddChat={onAddChat} />
 
-            {state.currentChatId === null ? (
-              <div className={s.messagesBlock}>
-                <div className={s.messages}>
-                  <NoSelectedChat />
-                </div>
-              </div>
-            ) : (
-              <Messages
-                onSendMessage={onSendMessage}
-                onDraftChange={onDraftChange}
-                getTime={getTime}
-              />
-            )}
+        {state.currentChatId === null ? (
+          <div className={s.messagesBlock}>
+            <div className={s.messages}>
+              <NoSelectedChat />
+            </div>
           </div>
-        {/* </StateContext.Provider> */}
-      </Provider>
+        ) : (
+          <Messages
+            onSendMessage={onSendMessage}
+            onDraftChange={onDraftChange}
+            getTime={getTime}
+          />
+        )}
+      </div>
+      {/* </StateContext.Provider> */}
     </BrowserRouter>
   );
 };
