@@ -49,7 +49,6 @@ const chatsReducer = (state = initialState.chats, action) => {
       };
       return produce(state, (draftState) => {
         draftState[action.id] = newChat;
-        // draftState.currentChatId = id;
       });
 
     default:

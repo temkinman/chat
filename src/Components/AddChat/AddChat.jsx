@@ -3,6 +3,7 @@ import ReactDom from "react-dom";
 import s from "./AddChat.module.css";
 import { useDispatch } from 'react-redux';
 import { addNewChatAction } from '../../actions/newChatAction'
+import { setCurrentChatAction } from '../../actions/chatAction'
 
 const AddChat = ({ isOpen, onClose }) => {
   const [titleChat, setTitleChat] = useState("");
@@ -19,7 +20,9 @@ const AddChat = ({ isOpen, onClose }) => {
       return;
     }
 
-    dispatch(addNewChatAction(titleChat));
+    const newChat = addNewChatAction(titleChat);
+    dispatch(newChat);
+    dispatch(setCurrentChatAction(newChat.id))
     onClose();
   };
 
