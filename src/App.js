@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import produce from "immer";
 import "./App.css";
@@ -6,12 +6,12 @@ import "./styles/styles.css";
 import ChatListHeader from "./Components/ChatListHeader/ChatListHeader";
 import Chats from "./Components/ChatList/Chats";
 import Messages from "./Components/Messages/Messages";
-import ContactControl from "./Components/ChatControl/ChatControl";
+import ChatControl from "./Components/ChatControl/ChatControl";
 import NoSelectedChat from "./Components/Messages/NoSelectedChat";
 import s from "./Components/Messages/Messages.module.css";
 import AddChat from "./Components/AddChat/AddChat";
-import {  useSelector } from "react-redux";
-// import initialState from "./redux/store";
+import { useSelector, useDispatch } from "react-redux";
+import { openModalAddNewChatAction } from "./actions/newChatAction";
 
 const months = [
   "января",
@@ -28,9 +28,7 @@ const months = [
   "декабря",
 ];
 
-const generateId = () => (Math.random() * 100000).toString();
-
-
+export const generateId = () => Math.floor(Math.random() * 100000);
 
 export const StateContext = React.createContext();
 
@@ -52,87 +50,26 @@ const getFullTime = (isoTime) => {
 };
 
 const Router = () => {
-  const state = useSelector(state => state);
-  // const [state, setState] = useState(initialState);
-  // const state = store.getState();
-  const currentChat = state.chats[state.currentChatId];
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const isOpen = state.newChatModal;
 
-  const onSendMessage = () => {
-    if (currentChat.draft === "") return;
+  const onOpenAddChat = () => dispatch(openModalAddNewChatAction(true));
 
-    const newMessage = {
-      time: new Date(),
-      from: currentChat.title,
-      text: currentChat.draft,
-      messageId: generateId(),
-    };
-
-    const newState = produce(state, (draftState) => {
-      draftState.chats[draftState.currentPage.currentChatId].messages.unshift(
-        newMessage
-      );
-      draftState.chats[draftState.currentPage.currentChatId].draft = "";
-    });
-
-    // setState(newState);
-  };
-
-  const onDraftChange = (text) => {
-    const newState = produce(state, (draftState) => {
-      draftState.chats[draftState.currentPage.currentChatId].draft = text;
-    });
-    //setState(newState);
-  };
-
-  const onGoToAddChat = () => {
-    const newState = { ...state, currentPage: { type: "addChat" } };
-    // setState(newState);
-  };
-
-  const onAddChat = (chatName) => {
-    const id = generateId();
-    const newChat = { id: id, title: chatName, messages: [], draft: "" };
-
-    const newState = produce(state, (draftState) => {
-      draftState.chats[id] = newChat;
-      draftState.currentPage = { type: "chat", currentChatId: id };
-    });
-    /*  const newState = {
-      ...state,
-      chats: {
-        ...state.chats,
-        [id]: { title: chatName, id: id, messages: [], draft: "" },
-      },
-      currentPage: { type: "chat", currentChatId: id },
-    };*/
-    // setState(newState);
-  };
-
-  const [isOpen, setIsOpen] = useState(false);
-  const onOpenAddChat = () => {
-    setIsOpen(true);
-  };
-
-  const onCloseAddChat = () => {
-    setIsOpen(false);
-  };
+  const onCloseAddChat = () => dispatch(openModalAddNewChatAction(false));
 
   return (
     <BrowserRouter>
-      {/* <StateContext.Provider value={state}> */}
       <div className="container">
         <div className="chatList">
-          {/* <Route path='/' component={ChatListHeader}/> */}
           <ChatListHeader />
-          <ContactControl onOpenAddChat={onOpenAddChat} />
-          <Chats
-          //chats={state.chats}
-          //onViewChat={onViewChat}
-          //currentChatId={state.currentPage.currentChatId}
-          />
+          <ChatControl onOpenAddChat={onOpenAddChat} />
+          <Chats />
         </div>
-        <Route path="/addcontact" AddChat />
-        <AddChat open={isOpen} onClose={onCloseAddChat} onAddChat={onAddChat} />
+        <AddChat
+          isOpen={isOpen}
+          onClose={onCloseAddChat}
+        />
 
         {state.currentChatId === null ? (
           <div className={s.messagesBlock}>
@@ -142,13 +79,11 @@ const Router = () => {
           </div>
         ) : (
           <Messages
-            onSendMessage={onSendMessage}
-            onDraftChange={onDraftChange}
             getTime={getTime}
+            currentChatId={state.currentChatId}
           />
         )}
       </div>
-      {/* </StateContext.Provider> */}
     </BrowserRouter>
   );
 };

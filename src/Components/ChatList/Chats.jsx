@@ -1,12 +1,13 @@
 import React from "react";
 import Chat from "./Chat/Chat";
-import {useDispatch, useSelector} from 'react-redux'
-import { viewChatAction } from '../../actions/chatAction'
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentChatAction } from "../../actions/chatAction";
 
 const Chats = () => {
   const dispatch = useDispatch();
-  const chats = useSelector(state => state.chats)
-  const currentChatId = useSelector(state => state.currentChatId)
+  const chats = useSelector((state) => state.chats);
+  const currentChatId = useSelector((state) => state.currentChatId);
+
   return (
     <div className="contacts">
       <ul className="contacts-list">
@@ -17,7 +18,7 @@ const Chats = () => {
               key={chat.id}
               id={chat.id}
               title={chat.title}
-              viewChatAction={viewChatAction}
+              setCurrentChatAction={setCurrentChatAction}
               dispatch={dispatch}
               isChatActive={isChatActive}
             />

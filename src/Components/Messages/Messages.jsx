@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import UserMessage from "./UserMessage";
 import SendMessage from "./SendMessage";
 import s from "./Messages.module.css";
-import {useSelector} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { draftChangeAction } from '../../actions/draftChangeAction'
+import { sendMessageAction } from '../../actions/messageAction'
 
-const Messages = ({ onSendMessage, onDraftChange, getTime }) => {
-  const currentChat = useSelector(state => state.currentChatId);
-  const activeChat = useSelector(state => state.chats)[currentChat];
+const Messages = ({ getTime, currentChatId }) => {
+  const currentChat = useSelector(state => state.chats)[currentChatId];
+  const dispatch = useDispatch();
   
-  const messages = activeChat.messages;
-  const draftText = activeChat.draft;
-  const currentChatName = activeChat.title;
+  const messages = currentChat.messages;
+  const draftText = currentChat.draft;
+  const currentChatName = currentChat.title;
 
   return (
     <div className={s.messagesBlock}>
@@ -27,9 +29,11 @@ const Messages = ({ onSendMessage, onDraftChange, getTime }) => {
         })}
       </div>
       <SendMessage
-        onSendMessage={onSendMessage}
-        onDraftChange={onDraftChange}
+        sendMessageAction={sendMessageAction}
+        draftChangeAction={draftChangeAction}
         draftText={draftText}
+        dispatch={dispatch}
+        currentChatId={currentChatId}
       />
     </div>
   );

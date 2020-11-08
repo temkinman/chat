@@ -1,20 +1,25 @@
-import React, {useState} from "react";
-import s from './SendMessage.module.css';
+import React from "react";
+import s from "./SendMessage.module.css";
 
-const SendMessage = ({onSendMessage, onDraftChange, draftText}) => {
-
+const SendMessage = ({
+  sendMessageAction,
+  draftChangeAction,
+  draftText,
+  currentChatId,
+  dispatch,
+}) => {
   const onSendMessageHandle = (event) => {
     event.preventDefault();
-    onSendMessage();
-  }
+    dispatch(sendMessageAction(currentChatId));
+  };
 
   const onInputText = (event) => {
     const newText = event.currentTarget.value;
-    onDraftChange(newText);
-  }
+    dispatch(draftChangeAction(newText, currentChatId));
+  };
 
   return (
-    <form action="" className={s.sendMessage} onSubmit={onSendMessageHandle}>
+    <form className={s.sendMessage} onSubmit={onSendMessageHandle}>
       <input
         className={s.sendText}
         type="text"

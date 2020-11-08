@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import ReactDom from "react-dom";
 import s from "./AddChat.module.css";
+import { useDispatch } from 'react-redux';
+import { addNewChatAction } from '../../actions/newChatAction'
 
-const AddChat = ({ open, onClose, onAddChat }) => {
+const AddChat = ({ isOpen, onClose }) => {
   const [titleChat, setTitleChat] = useState("");
+  const dispatch = useDispatch();
 
   const onChangeInput = (event) => {
     const newTitleChat = event.currentTarget.value;
@@ -16,11 +19,11 @@ const AddChat = ({ open, onClose, onAddChat }) => {
       return;
     }
 
-    onAddChat(titleChat);
+    dispatch(addNewChatAction(titleChat));
     onClose();
   };
 
-  if (!open) {
+  if (!isOpen) {
     return null;
   }
 

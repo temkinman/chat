@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import s from "./ChatControl.module.css";
 
-const ChatControls = ({ onOpenAddChat }) => {
+const ChatControl = ({ onOpenAddChat }) => {
   return (
     <div className={s.chatControl}>
       
@@ -15,4 +15,4 @@ const ChatControls = ({ onOpenAddChat }) => {
   );
 };
 
-export default ChatControls;
+export default ChatControl;

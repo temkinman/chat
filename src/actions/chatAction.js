@@ -1,9 +1,8 @@
-import { VIEW_CHAT } from "../redux/constants";
+import { SET_CURRENT_CHAT } from "../redux/constants";
 
-export const viewChatAction = (chatId) => {
-    console.log('VIEW_CHAT')
+export const setCurrentChatAction = (chatId) => {
   return {
-    type: VIEW_CHAT,
+    type: SET_CURRENT_CHAT,
     chatId,
   };
 };

@@ -46,6 +46,7 @@ export const initialState = {
     },
   },
   currentChatId: null,
+  newChatModal: false,
 };
 
 export default initialState;
