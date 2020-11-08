@@ -29,7 +29,7 @@ const chatsReducer = (state = initialState.chats, action) => {
         time: new Date(),
         from: currentChat.title,
         text: currentChat.draft,
-        messageId: generateId(),
+        messageId: action.messageId,
       };
 
       return produce(state, (draftState) => {
@@ -41,16 +41,14 @@ const chatsReducer = (state = initialState.chats, action) => {
         draftState[action.currentChatId].draft = action.text;
       });
     case ADD_CHAT:
-      const id = generateId();
       const newChat = {
-        id: id,
+        id: action.id,
         title: action.title,
         messages: [],
         draft: "",
       };
-
       return produce(state, (draftState) => {
-        draftState[id] = newChat;
+        draftState[action.id] = newChat;
         // draftState.currentChatId = id;
       });
 

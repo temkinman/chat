@@ -7,7 +7,7 @@ const ChatControl = ({ onOpenAddChat }) => {
     <div className={s.chatControl}>
       
         <NavLink to="/addchat" className={s.link}>
-          <button className="btn btn-secondary btn-sm" onClick={onOpenAddChat}>add contact</button>
+          <button className="btn btn-secondary btn-sm" onClick={onOpenAddChat}>add chat</button>
         </NavLink>
       
       {/* <button>remove contact</button> */}
