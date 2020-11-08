@@ -20,9 +20,7 @@ const AddChat = ({ isOpen, onClose }) => {
       return;
     }
 
-    const newChat = addNewChatAction(titleChat);
-    dispatch(newChat);
-    dispatch(setCurrentChatAction(newChat.id))
+    dispatch(addNewChatAction(titleChat))
     onClose();
   };
 
@@ -35,7 +33,7 @@ const AddChat = ({ isOpen, onClose }) => {
       <div className={s.overlay} onClick={onClose}></div>
       <form className={s.modal} onSubmit={onAddChatHandle}>
         <div className={s.header}>
-          <button className={s.close} onClick={onClose}>{"\u00D7"}</button>
+          <button type='button' className={s.close} onClick={onClose}>{"\u00D7"}</button>
         </div>
         <div className={s.body}>
           <span className={s.nameChat}>contact name</span>
@@ -43,7 +41,7 @@ const AddChat = ({ isOpen, onClose }) => {
         </div>
         <div className={s.footer}>
           <button type="submit" className={s.btn}>ok</button>
-          <button onClick={onClose} className={s.btn}>cancel</button>
+          <button type='button' onClick={onClose} className={s.btn}>cancel</button>
         </div>
       </form>
     </>,

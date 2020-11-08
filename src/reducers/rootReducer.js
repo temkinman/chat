@@ -14,6 +14,8 @@ const currentChatReducer = (state = initialState.currentChatId, action) => {
   switch (action.type) {
     case SET_CURRENT_CHAT:
       return action.chatId;
+    case ADD_CHAT:
+      return action.id;
     default:
       return state;
   }
