@@ -7,10 +7,10 @@ import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 const Chat = ({ id, title, isChatActive, dispatch, setCurrentChatAction }) => {
   const styleContact = `${s.item} ${isChatActive ? "active" : ""}`;
 
-  function handleClick (e, data) {
+  function handleClick(e, data) {
     console.log("OK");
     console.log(data.foo);
-  };
+  }
   return (
     <>
       <ContextMenuTrigger id="chatActions">
@@ -27,7 +27,7 @@ const Chat = ({ id, title, isChatActive, dispatch, setCurrentChatAction }) => {
       <ContextMenu id="chatActions" className={s.contextMenu}>
         <MenuItem
           data={{ foo: "bar1" }}
-          onClick={handleClick}
+          onClick={(e) => handleClick()}
           className={styleContact + s.contextmenuItem}
         >
           rename chat

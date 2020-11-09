@@ -31,7 +31,7 @@ const Router = () => {
           <ChatControl onOpenAddChat={onOpenAddChat} />
           <Chats />
         </div>
-        <AddChat isOpen={isOpen} onClose={onCloseAddChat} />
+        {<AddChat isOpen={isOpen} onClose={onCloseAddChat} />}
 
         {state.currentChatId === null ? (
           <div className={s.messagesBlock}>

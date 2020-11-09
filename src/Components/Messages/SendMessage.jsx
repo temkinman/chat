@@ -18,6 +18,20 @@ const SendMessage = ({
     dispatch(draftChangeAction(newText, currentChatId));
   };
 
+  // var textarea = document.querySelectorAll("textarea");
+
+  // textarea.addEventListener("keydown", autosize);
+
+  // function autosize() {
+  //   var el = this;
+  //   setTimeout(function () {
+  //     el.style.cssText = "height:auto; padding:0";
+  //     // for box-sizing other than "content-box" use:
+  //     // el.style.cssText = '-moz-box-sizing:content-box';
+  //     el.style.cssText = "height:" + el.scrollHeight + "px";
+  //   }, 0);
+  // }
+
   return (
     <form className={s.sendMessage} onSubmit={onSendMessageHandle}>
       <input
@@ -27,6 +41,16 @@ const SendMessage = ({
         onChange={onInputText}
         value={draftText}
       />
+      {/* <textarea
+        className={s.sendText}
+        name=""
+        id=""
+        cols="30"
+        rows="1"
+        placeholder="Enter your message here"
+        onChange={onInputText}
+        value={draftText}
+      ></textarea> */}
       <button className={s.sendBtn} type="submit">
         send
       </button>
