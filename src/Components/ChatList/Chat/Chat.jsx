@@ -30,14 +30,14 @@ const Chat = ({ id, title, isChatActive, dispatch, setCurrentChatAction }) => {
           onClick={handleClick}
           className={styleContact + s.contextmenuItem}
         >
-          rename
+          rename chat
         </MenuItem>
         <MenuItem
           data={{ foo: "bar2" }}
           onClick={handleClick}
           className={styleContact + s.contextmenuItem}
         >
-          delete
+          delete chat
         </MenuItem>
         <MenuItem divider />
         <MenuItem
