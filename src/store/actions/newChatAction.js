@@ -1,5 +1,5 @@
-import { ADD_CHAT, OPEN_MODAL_ADD_CHAT } from "../redux/constants";
-import { generateId } from './../App';
+import { ADD_CHAT, OPEN_MODAL_ADD_CHAT } from "../constants";
+import { generateId } from "../../Utils/Utils";
 
 export const addNewChatAction = (title) => {
   return {
@@ -9,7 +9,7 @@ export const addNewChatAction = (title) => {
   };
 };
 
-export const openModalAddNewChatAction = (isOpen) => {
+export const openAddNewChatAction = (isOpen) => {
   return {
     type: OPEN_MODAL_ADD_CHAT,
     newChatModal: isOpen,

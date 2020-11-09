@@ -1,13 +1,12 @@
-import { initialState } from "../redux/store";
+import { initialState } from "../store";
 import {
   SET_CURRENT_CHAT,
   SEND_MESSAGE,
   DRAFT_CHANGE,
   ADD_CHAT,
   OPEN_MODAL_ADD_CHAT,
-} from "../redux/constants";
+} from "../constants";
 import produce from "immer";
-import { generateId } from "../App";
 import { combineReducers } from "redux";
 
 const currentChatReducer = (state = initialState.currentChatId, action) => {

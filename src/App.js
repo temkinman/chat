@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
-import produce from "immer";
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import "./styles/styles.css";
 import ChatListHeader from "./Components/ChatListHeader/ChatListHeader";
@@ -11,52 +10,18 @@ import NoSelectedChat from "./Components/Messages/NoSelectedChat";
 import s from "./Components/Messages/Messages.module.css";
 import AddChat from "./Components/AddChat/AddChat";
 import { useSelector, useDispatch } from "react-redux";
-import { openModalAddNewChatAction } from "./actions/newChatAction";
-
-const months = [
-  "января",
-  "февраля",
-  "марта",
-  "апреля",
-  "мая",
-  "июня",
-  "июля",
-  "августа",
-  "сентября",
-  "октября",
-  "ноября",
-  "декабря",
-];
-
-export const generateId = () => Math.floor(Math.random() * 100000);
+import { openAddNewChatAction } from "./store/actions/newChatAction";
+import {getTime} from './Utils/Utils'
 
 export const StateContext = React.createContext();
-
-const getTime = (isoTime) => {
-  const time = new Date(isoTime);
-
-  return `${time.getHours()}:${time.getMinutes().toString().padStart(2, "0")}`;
-};
-
-const getFullTime = (isoTime) => {
-  const time = new Date(isoTime);
-
-  return `${time.getHours()}:${time
-    .getMinutes()
-    .toString()
-    .padStart(2, "0")} ${time.getDate()} ${
-    months[time.getMonth()]
-  } ${time.getFullYear()}г.`;
-};
 
 const Router = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const isOpen = state.newChatModal;
 
-  const onOpenAddChat = () => dispatch(openModalAddNewChatAction(true));
-
-  const onCloseAddChat = () => dispatch(openModalAddNewChatAction(false));
+  const onOpenAddChat = () => dispatch(openAddNewChatAction(true));
+  const onCloseAddChat = () => dispatch(openAddNewChatAction(false));
 
   return (
     <BrowserRouter>
@@ -66,10 +31,7 @@ const Router = () => {
           <ChatControl onOpenAddChat={onOpenAddChat} />
           <Chats />
         </div>
-        <AddChat
-          isOpen={isOpen}
-          onClose={onCloseAddChat}
-        />
+        <AddChat isOpen={isOpen} onClose={onCloseAddChat} />
 
         {state.currentChatId === null ? (
           <div className={s.messagesBlock}>
@@ -78,10 +40,7 @@ const Router = () => {
             </div>
           </div>
         ) : (
-          <Messages
-            getTime={getTime}
-            currentChatId={state.currentChatId}
-          />
+          <Messages getTime={getTime} currentChatId={state.currentChatId} />
         )}
       </div>
     </BrowserRouter>

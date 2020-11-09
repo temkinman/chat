@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../images/icons/globe-americas.svg";
-import s from './ChatList.module.css'
+import s from "./ChatList.module.css";
 
 const ChatListHeader = () => {
   return (

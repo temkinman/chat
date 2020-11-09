@@ -1,4 +1,4 @@
-import { SET_CURRENT_CHAT } from "../redux/constants";
+import { SET_CURRENT_CHAT } from "../constants";
 
 export const setCurrentChatAction = (chatId) => {
   return {

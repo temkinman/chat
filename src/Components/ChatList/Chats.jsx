@@ -1,7 +1,7 @@
 import React from "react";
 import Chat from "./Chat/Chat";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentChatAction } from "../../actions/chatAction";
+import { setCurrentChatAction } from "../../store/actions/chatAction";
 
 const Chats = () => {
   const dispatch = useDispatch();

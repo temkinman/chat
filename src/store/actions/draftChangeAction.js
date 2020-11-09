@@ -1,4 +1,4 @@
-import { DRAFT_CHANGE } from "./../redux/constants";
+import { DRAFT_CHANGE } from "./../constants";
 
 export const draftChangeAction = (text, currentChatId) => {
   return {
