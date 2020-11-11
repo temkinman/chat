@@ -11,7 +11,10 @@ import s from "./Components/Messages/Messages.module.css";
 import AddChat from "./Components/AddChat/AddChat";
 import { useSelector, useDispatch } from "react-redux";
 import { openAddNewChatAction } from "./store/actions/newChatAction";
-import {getTime} from './Utils/Utils'
+import { getTime } from "./Utils/Utils";
+import { useEffect } from "react";
+import { chatsFetched } from "./store/actions/chatsFetched";
+
 
 export const StateContext = React.createContext();
 
@@ -22,6 +25,11 @@ const Router = () => {
 
   const onOpenAddChat = () => dispatch(openAddNewChatAction(true));
   const onCloseAddChat = () => dispatch(openAddNewChatAction(false));
+
+  useEffect(async () => {
+    const chatsResponse = await fetch("http://localhost:3000/chats");
+    dispatch(chatsFetched(await chatsResponse.json()));
+  }, [dispatch]);
 
   return (
     <BrowserRouter>

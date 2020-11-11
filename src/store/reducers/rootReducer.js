@@ -5,6 +5,8 @@ import {
   DRAFT_CHANGE,
   ADD_CHAT,
   OPEN_MODAL_ADD_CHAT,
+  OPEN_CONTEXT_MENU,
+  CHATS_FETCHED,
 } from "../constants";
 import produce from "immer";
 import { combineReducers } from "redux";
@@ -22,6 +24,11 @@ const currentChatReducer = (state = initialState.currentChatId, action) => {
 
 const chatsReducer = (state = initialState.chats, action) => {
   switch (action.type) {
+    case CHATS_FETCHED:
+      return action.chats.reduce((chats, chat) => {
+        chats[chat.id] = chat;
+        return chats;
+      }, {});
     case SEND_MESSAGE:
       const currentChat = state[action.currentChatId];
       if (currentChat.draft === "") return;
@@ -57,7 +64,7 @@ const chatsReducer = (state = initialState.chats, action) => {
   }
 };
 
-const newChatModal = (state = initialState.newChatModal, action) => {
+const newChatModalReducer = (state = initialState.newChatModal, action) => {
   switch (action.type) {
     case OPEN_MODAL_ADD_CHAT:
       return action.newChatModal;
@@ -66,10 +73,20 @@ const newChatModal = (state = initialState.newChatModal, action) => {
   }
 };
 
+const contextMenuReducer = (state = initialState.contextMenu, action) => {
+  switch (action.type) {
+    case OPEN_CONTEXT_MENU:
+      return action.isOpen;
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   chats: chatsReducer,
   currentChatId: currentChatReducer,
-  newChatModal,
+  newChatModal: newChatModalReducer,
+  contextMenu: contextMenuReducer,
 });
 
 export default rootReducer;

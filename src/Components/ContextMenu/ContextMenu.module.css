@@ -1,0 +1,63 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.right-click-area {
+  width: 500px;
+  height: 500px;
+  background-color: black;
+  background-image: radial-gradient(
+      white,
+      rgba(255, 255, 255, 0.2) 2px,
+      transparent 40px
+    ),
+    radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 30px),
+    radial-gradient(white, rgba(255, 255, 255, 0.1) 2px, transparent 40px),
+    radial-gradient(
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.1) 2px,
+      transparent 30px
+    );
+  background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px;
+  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+  color: white;
+  margin: auto;
+  display: flex;
+  position: relative;
+}
+.text {
+  margin: auto;
+  text-align: center;
+  font-size: 32px;
+  line-height: 1.5;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.5),
+    0 0 10px rgba(255, 255, 255, 0.5);
+}
+.rightClickMenu {
+  margin: 0;
+  padding: 5px 0px;
+  position: fixed;
+  list-style: none;
+  background: #242b32;
+  border: 0;
+  border-radius: 2px;
+  display: none;
+}
+.rightClickMenu.active {
+  display: block;
+}
+.rightClickMenuItem {
+  width: 100%;
+  padding: 4px 15px;
+  box-sizing: border-box;
+  cursor: default;
+  font-size: 16px;
+  color: #9b9fa1;
+}
+.rightClickMenuItem:hover {
+  background: #333333;
+}
