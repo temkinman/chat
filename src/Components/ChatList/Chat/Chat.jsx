@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import avatarMale from "../../../images/faces/male-default-avatar.png";
 import avatarMan from "../../../images/faces/man-default-avatar.png";
 import s from "./Chat.module.css";
-import "./contextMenu.css";
 import ContextMenu from "../../ContextMenu/ContextMenu";
 import { context_menu_chats } from "../../../store/constants";
 
