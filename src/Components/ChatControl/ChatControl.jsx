@@ -5,12 +5,9 @@ import s from "./ChatControl.module.css";
 const ChatControl = ({ onOpenAddChat }) => {
   return (
     <div className={s.chatControl}>
-      
-        <NavLink to="/addchat" className={s.link}>
+        {/* <NavLink to="/" className={s.link}> */}
           <button className="btn btn-secondary btn-sm" onClick={onOpenAddChat}>+</button>
-        </NavLink>
-      
-      {/* <button>remove contact</button> */}
+        {/* </NavLink> */}
     </div>
   );
 };

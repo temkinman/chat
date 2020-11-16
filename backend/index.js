@@ -1,4 +1,12 @@
-/*
+const getChats = (userId) => {
+  const chatIds = state.users[userId].chatIds;
+  return chatIds.map((chatId) => {
+    return state.chats[chatId];
+  });
+};
+
+const Koa = require('koa'); //подкючаем KOA
+const app = new Koa();
 const http = require("http");
 const server = http.createServer((req, res) => {
   if (req.url === "/chats") {
@@ -7,11 +15,10 @@ const server = http.createServer((req, res) => {
     res.end(JSON.stringify(chats));
   }
 });
-server.listen(3000);
-*/
+// server.listen(3000);
 
-const Koa = require('koa'); //подкючаем KOA
-const app = new Koa();
+
+
 
 const koaBody = require('koa-body');
 const router = require('./router');
@@ -22,11 +29,13 @@ app.use(koaBody());
 app.use(router.routes());
 app.use(router.allowedMethods());
 
+http.createServer(app.callback()).listen(3000);
+/*
 app.listen(PORT, () => {
   console.log(`koa server is working (port: ${PORT})... http://localhost:3000`);
-});
+});*/
 
-/*
+
 let state = {
   users: {
     1: {
@@ -89,6 +98,7 @@ let state = {
   currentUser: 1,
 };
 
+/*
 const getChats = (userId) => {
   const chatIds = state.users[userId].chatIds;
   return chatIds.map((chatId) => {

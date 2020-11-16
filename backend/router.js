@@ -73,7 +73,7 @@ const getChats = (userId) => {
 router.get("/chats", async (ctx) => {
   try {
       console.log("In router method get/chats")
-    ctx.body = getChats(state.currentUser);
+   ctx.body = getChats(state.currentUser);
     console.log("ctx.body", ctx.body);
   } catch (err) {
     ctx.status = err.status || 500;
