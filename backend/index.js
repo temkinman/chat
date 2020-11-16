@@ -1,3 +1,4 @@
+/*
 const http = require("http");
 const server = http.createServer((req, res) => {
   if (req.url === "/chats") {
@@ -7,26 +8,44 @@ const server = http.createServer((req, res) => {
   }
 });
 server.listen(3000);
+*/
 
+const Koa = require('koa'); //подкючаем KOA
+const app = new Koa();
+
+const koaBody = require('koa-body');
+const router = require('./router');
+
+const PORT = process.env.PORT || 3000;
+
+app.use(koaBody());
+app.use(router.routes());
+app.use(router.allowedMethods());
+
+app.listen(PORT, () => {
+  console.log(`koa server is working (port: ${PORT})... http://localhost:3000`);
+});
+
+/*
 let state = {
   users: {
     1: {
-      id: "1",
+      id: 1,
       nickName: "Alex",
       avatar: "img",
-      chatIds: ["111", "777"],
+      chatIds: [111, 777],
     },
     2: {
-      id: "2",
-      nickName: "Mikle",
+      id: 2,
+      nickName: "Mikhail",
       avatar: "img",
-      chatIds: ["888", "777"],
+      chatIds: [888, 777],
     },
   },
   chats: {
     111: {
       title: "onliner",
-      id: "111",
+      id: 111,
       messages: [
         {
           time: "2020-07-20T14:12",
@@ -39,7 +58,7 @@ let state = {
     },
     777: {
       title: "nexta",
-      id: "777",
+      id: 777,
       messages: [
         {
           time: "2020-09-30T20:00",
@@ -52,7 +71,7 @@ let state = {
     },
     888: {
       title: "tutby",
-      id: "888",
+      id: 888,
       messages: [
         {
           time: "2020-08-30T24:00",
@@ -64,6 +83,10 @@ let state = {
       draft: "",
     },
   },
+  currentChatId: null,
+  newChatModal: false,
+  contextMenu: false,
+  currentUser: 1,
 };
 
 const getChats = (userId) => {
@@ -72,3 +95,4 @@ const getChats = (userId) => {
     return state.chats[chatId];
   });
 };
+*/

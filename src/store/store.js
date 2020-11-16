@@ -8,6 +8,7 @@ export const initialState = {
   currentChatId: null,
   newChatModal: false,
   contextMenu: false,
+  currentUser: 1,
 };
 
 export default initialState;

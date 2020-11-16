@@ -29,6 +29,7 @@ const Router = () => {
   useEffect(async () => {
     const chatsResponse = await fetch("http://localhost:3000/chats");
     dispatch(chatsFetched(await chatsResponse.json()));
+    // console.log('chatsResponse', chatsResponse);
   }, [dispatch]);
 
   return (
