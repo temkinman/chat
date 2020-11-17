@@ -1,3 +1,10 @@
+const Koa = require('koa');
+const koaBody = require('koa-body');
+const router = require('./router');
+
+const app = new Koa();
+const http = require("http");
+
 const getChats = (userId) => {
   const chatIds = state.users[userId].chatIds;
   return chatIds.map((chatId) => {
@@ -5,9 +12,6 @@ const getChats = (userId) => {
   });
 };
 
-const Koa = require('koa'); //подкючаем KOA
-const app = new Koa();
-const http = require("http");
 const server = http.createServer((req, res) => {
   if (req.url === "/chats") {
     const chats = getChats(1);
@@ -16,12 +20,6 @@ const server = http.createServer((req, res) => {
   }
 });
 // server.listen(3000);
-
-
-
-
-const koaBody = require('koa-body');
-const router = require('./router');
 
 const PORT = process.env.PORT || 3000;
 

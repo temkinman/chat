@@ -105,10 +105,6 @@ const isExistChat = (state, title) => {
   return result;
 };
 
-const addChatToUserIds = (id) => {
-  state.users[state.currentUser].userChats.push(id);
-};
-
 router.post("/", async (ctx) => {
   const type = ctx.request.body.type;
   const chatTitle = ctx.request.body.title;
@@ -125,7 +121,8 @@ router.post("/", async (ctx) => {
         };
 
         state = { ...state, chats: { ...state.chats, [newChat.id]: newChat } };
-        addChatToUserIds(newChat.id);
+        state.users[state.currentUser].chatIds.push( newChat.id);
+
         ctx.body = state;
       } else {
         console.log(`Chat ${chatTitle} is exist`);
