@@ -15,9 +15,6 @@ import { getTime } from "./Utils/Utils";
 import { useEffect } from "react";
 import { chatsFetched } from "./store/actions/chatsFetched";
 
-
-export const StateContext = React.createContext();
-
 const Router = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -27,7 +24,8 @@ const Router = () => {
   const onCloseAddChat = () => dispatch(openAddNewChatAction(false));
 
   useEffect(async () => {
-    const chatsResponse = await fetch("http://localhost:3000/chats");
+    const chatsResponse = await fetch("http://localhost:3000");
+    console.log('chatsResponse', chatsResponse);
     dispatch(chatsFetched(await chatsResponse.json()));
     // console.log('chatsResponse', chatsResponse);
   }, [dispatch]);

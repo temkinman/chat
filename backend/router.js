@@ -70,10 +70,9 @@ const getChats = (userId) => {
   });
 };
 
-router.get("/chats", async (ctx) => {
+router.get("/", async (ctx) => {
   try {
-      console.log("In router method get/chats")
-   ctx.body = getChats(state.currentUser);
+    ctx.body = getChats(state.currentUser);
     console.log("ctx.body", ctx.body);
   } catch (err) {
     ctx.status = err.status || 500;
@@ -121,7 +120,7 @@ router.post("/", async (ctx) => {
         };
 
         state = { ...state, chats: { ...state.chats, [newChat.id]: newChat } };
-        state.users[state.currentUser].chatIds.push( newChat.id);
+        state.users[state.currentUser].chatIds.push(newChat.id);
 
         ctx.body = state;
       } else {

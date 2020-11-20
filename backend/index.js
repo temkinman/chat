@@ -1,17 +1,13 @@
 const Koa = require('koa');
 const koaBody = require('koa-body');
 const router = require('./router');
+const cors = require('@koa/cors');
+// var cors = require("cors");
 
 const app = new Koa();
 const http = require("http");
 
-const getChats = (userId) => {
-  const chatIds = state.users[userId].chatIds;
-  return chatIds.map((chatId) => {
-    return state.chats[chatId];
-  });
-};
-
+/*
 const server = http.createServer((req, res) => {
   if (req.url === "/chats") {
     const chats = getChats(1);
@@ -19,19 +15,20 @@ const server = http.createServer((req, res) => {
     res.end(JSON.stringify(chats));
   }
 });
-// server.listen(3000);
+ server.listen(3000);
+*/
 
 const PORT = process.env.PORT || 3000;
 
 app.use(koaBody());
 app.use(router.routes());
+app.use(cors());
 app.use(router.allowedMethods());
 
-http.createServer(app.callback()).listen(3000);
-/*
+// http.createServer(app.callback()).listen(3000);
 app.listen(PORT, () => {
   console.log(`koa server is working (port: ${PORT})... http://localhost:3000`);
-});*/
+});
 
 
 let state = {
@@ -95,12 +92,3 @@ let state = {
   contextMenu: false,
   currentUser: 1,
 };
-
-/*
-const getChats = (userId) => {
-  const chatIds = state.users[userId].chatIds;
-  return chatIds.map((chatId) => {
-    return state.chats[chatId];
-  });
-};
-*/
