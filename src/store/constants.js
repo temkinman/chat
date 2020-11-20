@@ -5,6 +5,7 @@ export const ADD_CHAT = "ADD_CHAT";
 export const OPEN_MODAL_ADD_CHAT = "OPEN_MODAL_ADD_CHAT";
 export const OPEN_CONTEXT_MENU = "OPEN_CONTEXT_MENU";
 export const CHATS_FETCHED = "CHATS_FETCHED";
+export const SET_CURRENT_USER = "SET_CURRENT_USER"
 
 export const context_menu_chats = {
   items: ["rename chat", "delete chat", "clear history"],

@@ -23,11 +23,22 @@ const Router = () => {
   const onOpenAddChat = () => dispatch(openAddNewChatAction(true));
   const onCloseAddChat = () => dispatch(openAddNewChatAction(false));
 
+  async function postData(url = "", data = {}) {
+    console.log('data', data);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  }
+
   useEffect(async () => {
-    const chatsResponse = await fetch("http://localhost:3000");
-    console.log('chatsResponse', chatsResponse);
-    dispatch(chatsFetched(await chatsResponse.json()));
-    // console.log('chatsResponse', chatsResponse);
+    const chatsResponse = postData("http://localhost:3000/chats", { id: state.currentUser });
+    
+    dispatch(chatsFetched(await chatsResponse));
   }, [dispatch]);
 
   return (

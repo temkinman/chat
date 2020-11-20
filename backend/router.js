@@ -57,10 +57,10 @@ let state = {
       draft: "",
     },
   },
-  currentChatId: null,
-  newChatModal: false,
-  contextMenu: false,
-  currentUser: 1,
+  // currentChatId: null,
+  // newChatModal: false,
+  // contextMenu: false,
+  // currentUser: 1,
 };
 
 const getChats = (userId) => {
@@ -70,10 +70,14 @@ const getChats = (userId) => {
   });
 };
 
-router.get("/", async (ctx) => {
+router.post("/chats", async (ctx) => {
   try {
-    ctx.body = getChats(state.currentUser);
-    console.log("ctx.body", ctx.body);
+    console.log("ctx.request.body", ctx.request.body);
+    const currentUserId = ctx.request.body.id;
+
+    if (currentUserId) {
+      ctx.body = getChats(currentUserId);
+    }
   } catch (err) {
     ctx.status = err.status || 500;
     ctx.body = err.message;

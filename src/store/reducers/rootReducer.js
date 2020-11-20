@@ -7,6 +7,7 @@ import {
   OPEN_MODAL_ADD_CHAT,
   OPEN_CONTEXT_MENU,
   CHATS_FETCHED,
+  SET_CURRENT_USER
 } from "../constants";
 import produce from "immer";
 import { combineReducers } from "redux";
@@ -82,11 +83,21 @@ const contextMenuReducer = (state = initialState.contextMenu, action) => {
   }
 };
 
+const currentUserReducer = (state = initialState.currentUser, action) => {
+  switch (action.type) {
+    case SET_CURRENT_USER:
+      return action.currentUser;
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   chats: chatsReducer,
   currentChatId: currentChatReducer,
   newChatModal: newChatModalReducer,
   contextMenu: contextMenuReducer,
+  currentUser: currentUserReducer,
 });
 
 export default rootReducer;
