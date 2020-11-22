@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import avatarMale from "../../../images/faces/male-default-avatar.png";
 import avatarMan from "../../../images/faces/man-default-avatar.png";
 import s from "./Chat.module.css";
-import ContextMenu from "../../ContextMenu/ContextMenu";
-import { context_menu_chats } from "../../../store/constants";
+import ContextMenuContainer from "../../ContextMenu/ContextMenu";
 
 const Chat = ({
   id,
@@ -15,6 +14,7 @@ const Chat = ({
   isOpenContextMenu,
   currentChatId,
   positionMenu,
+  contextMenuList
 }) => {
   const styleContact = `${s.item} ${isChatActive ? "active" : ""}`;
 
@@ -23,20 +23,19 @@ const Chat = ({
       <li
         className={styleContact}
         onClick={() => dispatch(setCurrentChatAction(id))}
-        onContextMenu={(e) => onOpenContextMenuHandle(e, id)}
+        onContextMenu={(e) => onOpenContextMenuHandle(e, id, title)}
       >
         <img className={s.avatar} src={avatarMale} alt="" />
         <span className={s.name}>{title}</span>
         <span className={s.unreadMessage}>3</span>
       </li>
-      {isOpenContextMenu && currentChatId === id && (
-        <ContextMenu
+      {/* {isOpenContextMenu && currentChatId === id && (
+        <ContextMenuContainer
           isActive={isOpenContextMenu}
-          listItems={context_menu_chats.items}
-          classNames={context_menu_chats.classNames}
+          contextMenuList={contextMenuList}
           positionMenu={positionMenu}
         />
-      )}
+      )} */}
     </>
   );
 };

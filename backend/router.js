@@ -72,7 +72,6 @@ const getChats = (userId) => {
 
 router.post("/chats", async (ctx) => {
   try {
-    console.log("ctx.request.body", ctx.request.body);
     const currentUserId = ctx.request.body.id;
 
     if (currentUserId) {
@@ -84,6 +83,22 @@ router.post("/chats", async (ctx) => {
     ctx.app.emit("error", err, ctx);
   }
 });
+
+//DELETE /chat/:chatId
+router.delete("/chat/:chatId", async (ctx) => {
+  try {
+    const currentUserId = ctx.request.body.id;
+    const currentChats = state.users[currentUserId].chatIds;
+    
+    const indChat = currentChats.findIndex(item => item === ctx.params.chatId);
+    currentChats.splice(indChat, 1);
+
+  } catch (err) {
+    ctx.status = err.status || 500;
+    ctx.body = err.message;
+    ctx.app.emit("error", err, ctx);
+  }
+})
 
 router.get("/:id", async (ctx) => {
   try {

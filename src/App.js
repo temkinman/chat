@@ -24,7 +24,6 @@ const Router = () => {
   const onCloseAddChat = () => dispatch(openAddNewChatAction(false));
 
   async function postData(url = "", data = {}) {
-    console.log('data', data);
     const response = await fetch(url, {
       method: "POST",
       headers: {

@@ -1,12 +1,12 @@
 import React from "react";
 import s from "./ContextMenu.module.css";
 
-const ContextMenuItem = ({ text, onCloseHandle }) => {
+const ContextMenuItem = ({ text, id, onChooseHandle }) => {
   return (
     <>
       <li
         className={s.rightClickMenuItem}
-        onClick={(event) => onCloseHandle(event)}
+        onClick={() => onChooseHandle(id)}
       >
         {text}
       </li>

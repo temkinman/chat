@@ -4,9 +4,10 @@ export const initialState = {
     nickName: "Alex",
     avatar: "img",
   },
-    chats:{},
+  chats: {},
   currentChatId: null,
   newChatModal: false,
+  renameChatModal: false,
   contextMenu: false,
   currentUser: 1,
 };

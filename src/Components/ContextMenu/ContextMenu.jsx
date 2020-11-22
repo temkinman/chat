@@ -1,22 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import ContextMenuItem from "./ContextMenuItem";
 import s from "./ContextMenu.module.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openContextMenuAction } from "../../store/actions/chatAction";
+import { openRenameChatAction } from "../../store/actions/openRenameChatAction";
+import RenameChat from "./../RenameChat/RenameChat";
 
-const ContextMenu = ({
-  listItems,
-  action,
-  actionTypes,
-  isActive,
-  positionMenu,
-}) => {
+const ContextMenu = ({ contextMenuList, isActive, positionMenu, onChooseHandle }) => {
+  const isOpen = useSelector((state) => state.renameChatModal);
   const dispatch = useDispatch();
+
+  const onClose = () => {
+    console.log("onClosing....");
+  };
 
   const onCloseHandle = (e) => {
     e.preventDefault();
     dispatch(openContextMenuAction(false));
   };
+
+  
 
   return (
     <>
@@ -29,14 +32,17 @@ const ContextMenu = ({
         className={`${s.rightClickMenu} ${isActive ? `${s.active}` : ""}`}
         style={positionMenu}
       >
-        {listItems.map((item, ind) => (
+        {contextMenuList.map((item, ind) => (
           <ContextMenuItem
             key={ind}
-            text={item}
+            text={item.title}
+            id={ind}
             onCloseHandle={onCloseHandle}
+            onChooseHandle={onChooseHandle}
           />
         ))}
       </ul>
+      {<RenameChat isOpen={isOpen} onClose={onClose} />}
     </>
   );
 };
