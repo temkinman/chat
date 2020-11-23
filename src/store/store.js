@@ -10,6 +10,7 @@ export const initialState = {
   renameChatModal: false,
   contextMenu: false,
   currentUser: 1,
+  confirmModal: false,
 };
 
 export default initialState;

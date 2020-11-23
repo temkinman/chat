@@ -8,7 +8,8 @@ import {
   OPEN_CONTEXT_MENU,
   CHATS_FETCHED,
   SET_CURRENT_USER,
-  OPEN_MODAL_RENAME_CHAT
+  OPEN_MODAL_RENAME_CHAT,
+  OPEN_CONFIRM_MODAL
 } from "../constants";
 import produce from "immer";
 import { combineReducers } from "redux";
@@ -102,6 +103,15 @@ const renameChatModalReducer = (state = initialState.renameChatModal, action) =>
   }
 }
 
+const confirmModalReducer = (state = initialState.confirmModal, action) => {
+  switch (action.type) {
+    case OPEN_CONFIRM_MODAL:
+      return action.confirmModal;
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   chats: chatsReducer,
   currentChatId: currentChatReducer,
@@ -109,6 +119,7 @@ const rootReducer = combineReducers({
   contextMenu: contextMenuReducer,
   currentUser: currentUserReducer,
   renameChatModal: renameChatModalReducer,
+  confirmModal: confirmModalReducer,
 });
 
 export default rootReducer;

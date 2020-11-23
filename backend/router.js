@@ -60,7 +60,7 @@ let state = {
   // currentChatId: null,
   // newChatModal: false,
   // contextMenu: false,
-  // currentUser: 1,
+  currentUser: 1,
 };
 
 const getChats = (userId) => {
@@ -84,15 +84,54 @@ router.post("/chats", async (ctx) => {
   }
 });
 
+router.post("/chat/:chatId", async (ctx) => {
+  try {
+    const { chatId, title, currentUserId } = ctx.request.body;
+    if (chatId in state.chats) {
+      state.chats[chatId].title = title; 
+      ctx.body = getChats(currentUserId);
+    }
+  } catch (err) {
+    ctx.status = err.status || 500;
+    ctx.body = err.message;
+    ctx.app.emit("error", err, ctx);
+  }
+});
+
 //DELETE /chat/:chatId
 router.delete("/chat/:chatId", async (ctx) => {
   try {
-    const currentUserId = ctx.request.body.id;
-    const currentChats = state.users[currentUserId].chatIds;
+    const  chatId = ctx.request.params.chatId;
+    const currentUserId = state.currentUser;
     
-    const indChat = currentChats.findIndex(item => item === ctx.params.chatId);
-    currentChats.splice(indChat, 1);
+    if (chatId in state.chats) {
+      let currentChats = state.users[currentUserId].chatIds;
+      const indChat = currentChats.findIndex(item => item === chatId);
+      currentChats.splice(indChat, 1);
+      ctx.body = getChats(currentUserId);
+    }
+  } catch (err) {
+    ctx.status = err.status || 500;
+    ctx.body = err.message;
+    ctx.app.emit("error", err, ctx);
+  }
+})
 
+router.delete("/chat/history/:chatId", async (ctx) => {
+  try {
+    const  chatId = ctx.request.params.chatId;
+    const currentUserId = state.currentUser;
+    if (chatId in state.chats) {
+      state.chats[chatId].messages = []; 
+      ctx.body = getChats(currentUserId);
+    }
+    
+    if (chatId in state.chats) {
+      let currentChats = state.users[currentUserId].chatIds;
+      const indChat = currentChats.findIndex(item => item === chatId);
+      currentChats.splice(indChat, 1);
+      ctx.body = getChats(currentUserId);
+    }
   } catch (err) {
     ctx.status = err.status || 500;
     ctx.body = err.message;

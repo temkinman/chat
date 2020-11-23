@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import ReactDom from "react-dom";
 import s from "./RenameChat.module.css";
 import { useDispatch } from "react-redux";
-import { addNewChatAction } from "../../store/actions/newChatAction";
 import { openRenameChatAction } from './../../store/actions/openRenameChatAction';
 
-const RenameChat = ({ isOpen, title }) => {
+const RenameChat = ({ isOpen, title, confirmChangeChatName }) => {
   const [titleChat, setTitleChat] = useState(title);
   const dispatch = useDispatch();
 
@@ -19,9 +18,8 @@ const RenameChat = ({ isOpen, title }) => {
     if (titleChat.length === 0) {
       return;
     }
-
-    // dispatch(addNewChatAction(titleChat));
-    
+    confirmChangeChatName(titleChat)
+    onClose();
   };
 
   const onClose = () => {
