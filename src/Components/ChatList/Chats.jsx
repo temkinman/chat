@@ -11,7 +11,7 @@ import RenameChat from "../RenameChat/RenameChat";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import { openConfirmAction } from "../../store/actions/openConfirmAction";
 import { chatsFetched } from "../../store/actions/chatsFetched";
-import axios from "axios";
+// import axios from "axios";
 
 const Chats = () => {
   const dispatch = useDispatch();

@@ -14,6 +14,7 @@ import { openAddNewChatAction } from "./store/actions/newChatAction";
 import { getTime } from "./Utils/Utils";
 import { useEffect } from "react";
 import { chatsFetched } from "./store/actions/chatsFetched";
+import Authorization from "./Components/Authorization/AuthorizationForm";
 
 const Router = () => {
   const state = useSelector((state) => state);
@@ -35,31 +36,39 @@ const Router = () => {
   }
 
   useEffect(async () => {
-    const chatsResponse = postData("http://localhost:3000/chats", { id: state.currentUser });
-    
+    const chatsResponse = postData("http://localhost:3000/chats", {
+      id: state.currentUser,
+    });
+
     dispatch(chatsFetched(await chatsResponse));
   }, [dispatch]);
 
   return (
     <BrowserRouter>
-      <div className="container">
-        <div className="chatList">
-          <ChatListHeader />
-          <ChatControl onOpenAddChat={onOpenAddChat} />
-          <Chats />
-        </div>
-        {<AddChat isOpen={isOpen} onClose={onCloseAddChat} />}
-
-        {state.currentChatId === null ? (
-          <div className={s.messagesBlock}>
-            <div className={s.messages}>
-              <NoSelectedChat />
-            </div>
+      {true ? (
+          <div className="container">
+            <Authorization />
           </div>
-        ) : (
-          <Messages getTime={getTime} currentChatId={state.currentChatId} />
-        )}
-      </div>
+      ) : (
+        <div className="containerApp">
+          <div className="chatList">
+            <ChatListHeader />
+            <ChatControl onOpenAddChat={onOpenAddChat} />
+            <Chats />
+          </div>
+          {<AddChat isOpen={isOpen} onClose={onCloseAddChat} />}
+
+          {state.currentChatId === null ? (
+            <div className={s.messagesBlock}>
+              <div className={s.messages}>
+                <NoSelectedChat />
+              </div>
+            </div>
+          ) : (
+            <Messages getTime={getTime} currentChatId={state.currentChatId} />
+          )}
+        </div>
+      )}
     </BrowserRouter>
   );
 };

@@ -1,0 +1,56 @@
+.container {
+  background-color: #3e444c;
+  min-width: 417.5px !important;
+}
+
+.nav {
+  justify-content: center;
+}
+
+.nav-item {
+  width: 50%;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.form-group {
+  color: #9ca5b4;
+}
+
+.form-control {
+  background-color: #3e444c !important;
+  border: 2px solid #5e656f !important;
+  color: white !important;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgb(221 127 107 / 25%) !important;
+}
+
+.btn-custom {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 15px;
+}
+
+.nav-link.active {
+  color: #d3d4d5 !important;
+  background-color: #616569 !important;
+}
+
+.btn-authorization {
+  background-color: #4e9b5d !important;
+  width: 30%;
+  font-size: 1.1rem !important;
+  padding: 0.5rem 0 !important;
+}
+
+.required {
+  color: #ff7a59;
+}
+
+#controlled-tab-example-tabpane-login:hover,
+.active {
+  cursor: auto;
+  background-color: #ffffff00;
+}
