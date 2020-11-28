@@ -38,6 +38,11 @@
   background-color: #616569 !important;
 }
 
+.nav-link:hover {
+  color: black;
+  background-color: #c3c3c3;
+}
+
 .btn-authorization {
   background-color: #4e9b5d !important;
   width: 30%;

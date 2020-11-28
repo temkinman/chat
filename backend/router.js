@@ -3,15 +3,17 @@ const router = new Router();
 
 let state = {
   users: {
-    1: {
+    'admin': {
       id: 1,
-      nickName: "Alex",
+      nickName: "admin",
+      password: "12345",
       avatar: "img",
       chatIds: [111, 777],
     },
-    2: {
+    'user': {
       id: 2,
-      nickName: "Mikhail",
+      nickName: "user",
+      password: "12345",
       avatar: "img",
       chatIds: [888, 777],
     },
