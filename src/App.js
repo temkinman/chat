@@ -36,16 +36,17 @@ const Router = () => {
   }
 
   useEffect(async () => {
-    const chatsResponse = postData("http://localhost:3000/chats", {
-      id: state.currentUser,
-    });
+    // const chatsResponse = postData("http://localhost:3000/chats", {
+    //   id: state.currentUser,
+    // });
+    const chatsResponse = postData("http://localhost:3000/chats");
 
     dispatch(chatsFetched(await chatsResponse));
   }, [dispatch]);
 
   return (
     <BrowserRouter>
-      {true ? (
+      {false ? (
           <div className="container">
             <Authorization />
           </div>

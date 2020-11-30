@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDom from "react-dom";
 import s from "./AddChat.module.css";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,17 @@ import { addNewChatAction } from "../../store/actions/newChatAction";
 const AddChat = ({ isOpen, onClose }) => {
   const [titleChat, setTitleChat] = useState("");
   const dispatch = useDispatch();
+
+  async function postData(url = "", data = {}) {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    return await response.json();
+  }
 
   const onChangeInput = (event) => {
     const newTitleChat = event.currentTarget.value;
@@ -19,14 +30,14 @@ const AddChat = ({ isOpen, onClose }) => {
       return;
     }
 
-    dispatch(addNewChatAction(titleChat));
+    postData("http://localhost:3000/", {type: "ADD_CHAT", title: titleChat})
     onClose();
   };
 
   if (!isOpen) {
     return null;
   }
-  
+
   return ReactDom.createPortal(
     <>
       <div className={s.overlay} onClick={onClose}></div>
@@ -42,7 +53,7 @@ const AddChat = ({ isOpen, onClose }) => {
             type="text"
             className={s.nameInput}
             placeholder="enter name"
-            onChange={onChangeInput}
+            onChange={(e) => onChangeInput(e)}
             autoFocus
           ></input>
         </div>

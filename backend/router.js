@@ -3,14 +3,14 @@ const router = new Router();
 
 let state = {
   users: {
-    'admin': {
+    1: {
       id: 1,
       nickName: "admin",
-      password: "12345",
+      password: "admin",
       avatar: "img",
       chatIds: [111, 777],
     },
-    'user': {
+    2: {
       id: 2,
       nickName: "user",
       password: "12345",
@@ -72,11 +72,101 @@ const getChats = (userId) => {
   });
 };
 
+const getUsers = () => state.users;
+
+const getUserId = (userName, userPassword) => {
+  const users = getUsers();
+  for (let user in users) {
+    const { nickName, password } = users[user];
+    if (nickName === userName && password === userPassword) {
+      return users[user].id;
+    }
+  }
+  return -1;
+};
+
+const isFreeUserName = (name) => {
+  const users = getUsers();
+  for (let user in users) {
+    const { nickName } = users[user];
+    if (nickName === name) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const createNewUser = (name, password) => {
+  return {
+    id: generateId(),
+    nickName: name,
+    password: password,
+    avatar: "img",
+    chatIds: [],
+  };
+};
+
+router.post("/login", async (ctx) => {
+  try {
+    const userName = ctx.request.body.userName;
+    const userPassword = ctx.request.body.userPassword;
+    const currentUserId = getUserId(userName, userPassword);
+    let result;
+
+    if (currentUserId > 0) {
+      state.currentUser = currentUserId;
+      result = {
+        message: "Login succeed",
+        success: true,
+      };
+      ctx.body = result;
+    } else {
+      result = {
+        message: "Login failed",
+        success: false,
+      };
+      ctx.body = result;
+    }
+  } catch (err) {
+    ctx.status = err.status || 500;
+    ctx.body = err.message;
+    ctx.app.emit("error", err, ctx);
+  }
+});
+
+router.post("/signup", async (ctx) => {
+  try {
+    const userName = ctx.request.body.userName;
+    const userPassword = ctx.request.body.userPassword;
+    let result;
+
+    if (isFreeUserName(userName)) {
+      const newUser = createNewUser(userName, userPassword);
+      state.users[newUser.id] = newUser;
+      result = {
+        message: "registration completed successfully",
+        success: true,
+      };
+      ctx.body = result;
+    } else {
+      result = {
+        message: "registration failed",
+        success: false,
+      };
+      ctx.body = result;
+    }
+  } catch (err) {
+    ctx.status = err.status || 500;
+    ctx.body = err.message;
+    ctx.app.emit("error", err, ctx);
+  }
+});
+
 router.post("/chats", async (ctx) => {
   try {
-    const currentUserId = ctx.request.body.id;
+    const currentUserId = state.currentUser;
 
-    if (currentUserId) {
+    if (currentUserId > 0) {
       ctx.body = getChats(currentUserId);
     }
   } catch (err) {
@@ -88,9 +178,10 @@ router.post("/chats", async (ctx) => {
 
 router.post("/chat/:chatId", async (ctx) => {
   try {
-    const { chatId, title, currentUserId } = ctx.request.body;
+    const currentUserId = state.currentUser;
+    const { chatId, title } = ctx.request.body;
     if (chatId in state.chats) {
-      state.chats[chatId].title = title; 
+      state.chats[chatId].title = title;
       ctx.body = getChats(currentUserId);
     }
   } catch (err) {
@@ -103,12 +194,12 @@ router.post("/chat/:chatId", async (ctx) => {
 //DELETE /chat/:chatId
 router.delete("/chat/:chatId", async (ctx) => {
   try {
-    const  chatId = ctx.request.params.chatId;
+    const chatId = ctx.request.params.chatId;
     const currentUserId = state.currentUser;
-    
+
     if (chatId in state.chats) {
       let currentChats = state.users[currentUserId].chatIds;
-      const indChat = currentChats.findIndex(item => item === chatId);
+      const indChat = currentChats.findIndex((item) => item === chatId);
       currentChats.splice(indChat, 1);
       ctx.body = getChats(currentUserId);
     }
@@ -117,20 +208,20 @@ router.delete("/chat/:chatId", async (ctx) => {
     ctx.body = err.message;
     ctx.app.emit("error", err, ctx);
   }
-})
+});
 
 router.delete("/chat/history/:chatId", async (ctx) => {
   try {
-    const  chatId = ctx.request.params.chatId;
+    const chatId = ctx.request.params.chatId;
     const currentUserId = state.currentUser;
     if (chatId in state.chats) {
-      state.chats[chatId].messages = []; 
+      state.chats[chatId].messages = [];
       ctx.body = getChats(currentUserId);
     }
-    
+
     if (chatId in state.chats) {
       let currentChats = state.users[currentUserId].chatIds;
-      const indChat = currentChats.findIndex(item => item === chatId);
+      const indChat = currentChats.findIndex((item) => item === chatId);
       currentChats.splice(indChat, 1);
       ctx.body = getChats(currentUserId);
     }
@@ -139,7 +230,7 @@ router.delete("/chat/history/:chatId", async (ctx) => {
     ctx.body = err.message;
     ctx.app.emit("error", err, ctx);
   }
-})
+});
 
 router.get("/:id", async (ctx) => {
   try {
@@ -164,29 +255,44 @@ const isExistChat = (state, title) => {
   return result;
 };
 
+const createNewChat = (chatTitle) => {
+  return {
+    id: generateId(),
+    title: chatTitle,
+    messages: [],
+    draft: "",
+  };
+};
+
 router.post("/", async (ctx) => {
   const type = ctx.request.body.type;
   const chatTitle = ctx.request.body.title;
   const chatId = ctx.request.body.id;
-
+  let result;
+  
   switch (type) {
     case "ADD_CHAT":
       if (!isExistChat(state, chatTitle)) {
-        const newChat = {
-          id: generateId(),
-          title: chatTitle,
-          messages: [],
-          draft: "",
-        };
+        const newChat = createNewChat(chatTitle);
 
         state = { ...state, chats: { ...state.chats, [newChat.id]: newChat } };
         state.users[state.currentUser].chatIds.push(newChat.id);
 
-        ctx.body = state;
+        result = {
+          message: `Chat ${chatTitle} added`,
+          success: true,
+        };
+        ctx.body = result;
+        console.log("result", result);
       } else {
         console.log(`Chat ${chatTitle} is exist`);
+        result = {
+          message: `Chat ${chatTitle} is exist`,
+          success: false,
+        };
+        ctx.body = result;
       }
-      ctx.body = state;
+      // ctx.body = state;
       break;
     case "DELETE_CHAT":
       const userChats = state.users[state.currentUser].userChats;
