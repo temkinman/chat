@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import ContextMenuItem from "./ContextMenuItem";
 import s from "./ContextMenu.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { openContextMenuAction } from "../../store/actions/chatAction";
-import { openRenameChatAction } from "../../store/actions/openRenameChatAction";
 import RenameChat from "./../RenameChat/RenameChat";
 
 const ContextMenu = ({ contextMenuList, isActive, positionMenu, onChooseHandle }) => {

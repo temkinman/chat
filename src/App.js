@@ -35,21 +35,23 @@ const Router = () => {
     return await response.json();
   }
 
-  useEffect(async () => {
-    // const chatsResponse = postData("http://localhost:3000/chats", {
-    //   id: state.currentUser,
-    // });
-    const chatsResponse = postData("http://localhost:3000/chats");
-
-    dispatch(chatsFetched(await chatsResponse));
+  useEffect(() => {
+    async function fetchData() {
+      // const chatsResponse = postData("http://localhost:3000/chats", {
+      //   id: state.currentUser,
+      // });
+      const chatsResponse = postData("http://localhost:3000/chats");
+      dispatch(chatsFetched(await chatsResponse));
+    }
+    fetchData();
   }, [dispatch]);
 
   return (
     <BrowserRouter>
       {false ? (
-          <div className="container">
-            <Authorization />
-          </div>
+        <div className="container">
+          <Authorization />
+        </div>
       ) : (
         <div className="containerApp">
           <div className="chatList">

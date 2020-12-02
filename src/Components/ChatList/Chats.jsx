@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Chat from "./Chat/Chat";
 import ContextMenu from "./../ContextMenu/ContextMenu";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +16,6 @@ import { chatsFetched } from "../../store/actions/chatsFetched";
 const Chats = () => {
   const dispatch = useDispatch();
   const chats = useSelector((state) => state.chats);
-  const state = useSelector((state) => state);
   const currentChatId = useSelector((state) => state.currentChatId);
   const [currentChatTitle, setCurrentChatTitle] = useState("");
   const isOpenContextMenu = useSelector((state) => state.contextMenu);
@@ -117,9 +116,8 @@ const Chats = () => {
         {Object.values(chats).map((chat) => {
           const isChatActive = currentChatId === chat.id;
           return (
-            <>
+            <div key={chat.id}>
               <Chat
-                key={chat.id}
                 id={chat.id}
                 title={chat.title}
                 setCurrentChatAction={setCurrentChatAction}
@@ -133,7 +131,7 @@ const Chats = () => {
                 contextMenuList={contextMenuList}
               />
               {isOpenContextMenu && (
-                <ContextMenu
+                <ContextMenu 
                   isActive={isOpenContextMenu}
                   contextMenuList={contextMenuList}
                   positionMenu={positionMenu}
@@ -141,21 +139,21 @@ const Chats = () => {
                 />
               )}
               {isOpenRenameChat && (
-                <RenameChat
+                <RenameChat 
                   isOpen={isOpenRenameChat}
                   title={currentChatTitle}
                   confirmChangeChatName={changeChatName}
                 />
               )}
               {isOpenConfirmModal && (
-                <ConfirmModal
+                <ConfirmModal 
                   isOpen={isOpenConfirmModal}
                   questionText={questionText}
                   actionHandle={ actionWithChat ? deleteChat : clearHistory}
                   currentChatId={currentChatId}
                 />
               )}
-            </>
+            </div>
           );
         })}
       </ul>

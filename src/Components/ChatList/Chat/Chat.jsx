@@ -1,8 +1,6 @@
 import React from "react";
 import avatarMale from "../../../images/faces/male-default-avatar.png";
-import avatarMan from "../../../images/faces/man-default-avatar.png";
 import s from "./Chat.module.css";
-import ContextMenuContainer from "../../ContextMenu/ContextMenu";
 
 const Chat = ({
   id,
@@ -11,10 +9,6 @@ const Chat = ({
   dispatch,
   setCurrentChatAction,
   onOpenContextMenuHandle,
-  isOpenContextMenu,
-  currentChatId,
-  positionMenu,
-  contextMenuList
 }) => {
   const styleContact = `${s.item} ${isChatActive ? "active" : ""}`;
 
