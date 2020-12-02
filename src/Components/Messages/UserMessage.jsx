@@ -1,6 +1,5 @@
 import React from "react";
 import avatarMan from "../../images/faces/man-default-avatar.png";
-import avatarWomen from "../../images/faces/male-default-avatar.png";
 
 const UserMessage = ({ message, getTime }) => {
   return (

@@ -13,7 +13,7 @@ const months = [
   "декабря",
 ];
 
-const getFullTime = (isoTime) => {
+export const getFullTime = (isoTime) => {
   const time = new Date(isoTime);
 
   return `${time.getHours()}:${time

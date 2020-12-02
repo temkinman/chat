@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ReactDom from "react-dom";
 import s from "./AddChat.module.css";
 import { useDispatch } from "react-redux";
-import { addNewChatAction } from "../../store/actions/newChatAction";
 import addedNewChat from "../../store/actions/addedNewChat";
 
 const AddChat = ({ isOpen, onClose }) => {

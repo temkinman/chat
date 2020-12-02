@@ -1,25 +1,22 @@
-import React, {useState} from "react";
-import {
-  Button,
-  Form,
-  InputGroup,
-  Col,
-  OverlayTrigger,
-  Tooltip,
-  FaQuestionCircle,
-} from "react-bootstrap";
+import React, { useState } from "react";
+import { Button, Form, Col } from "react-bootstrap";
 
 const SignUp = () => {
   const handleSubmit = () => {
     console.log("YESS");
   };
-  const [userName, setUserName] = useState(true)
+  const [userName] = useState(true);
 
   return (
     <Form className="mt-4" onSubmit={handleSubmit}>
       <Form.Row>
         <Form.Group as={Col} controlId="formUserName">
-  <Form.Label>Username <span className="required">{userName ? "* Username in use. Use a different username" : "*" }</span></Form.Label>
+          <Form.Label>
+            Username{" "}
+            <span className="required">
+              {userName ? "* Username in use. Use a different username" : "*"}
+            </span>
+          </Form.Label>
           <Form.Control
             className="field__control"
             // onChange={(v) => setJob(v.currentTarget.value.trim())}
@@ -29,13 +26,17 @@ const SignUp = () => {
       </Form.Row>
       <Form.Row>
         <Form.Group as={Col} controlId="formPassword">
-          <Form.Label>Password <span className="required">*</span></Form.Label>
+          <Form.Label>
+            Password <span className="required">*</span>
+          </Form.Label>
           <Form.Control type="password" placeholder="Password" />
         </Form.Group>
       </Form.Row>
       <Form.Row>
         <Form.Group as={Col} controlId="formConfirmPassword">
-          <Form.Label>Confirm password <span className="required">*</span></Form.Label>
+          <Form.Label>
+            Confirm password <span className="required">*</span>
+          </Form.Label>
           <Form.Control type="password" placeholder="Password" />
         </Form.Group>
       </Form.Row>
