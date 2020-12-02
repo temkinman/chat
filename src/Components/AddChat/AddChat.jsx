@@ -3,34 +3,24 @@ import ReactDom from "react-dom";
 import s from "./AddChat.module.css";
 import { useDispatch } from "react-redux";
 import { addNewChatAction } from "../../store/actions/newChatAction";
+import addedNewChat from "../../store/actions/addedNewChat";
 
 const AddChat = ({ isOpen, onClose }) => {
   const [titleChat, setTitleChat] = useState("");
   const dispatch = useDispatch();
-
-  async function postData(url = "", data = {}) {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
-    return await response.json();
-  }
 
   const onChangeInput = (event) => {
     const newTitleChat = event.currentTarget.value;
     setTitleChat(newTitleChat);
   };
 
-  const onAddChatHandle = (event) => {
+  const onAddChatHandle = async (event) => {
     event.preventDefault();
     if (titleChat.length === 0) {
       return;
     }
 
-    postData("http://localhost:3000/", {type: "ADD_CHAT", title: titleChat})
+    dispatch(addedNewChat(titleChat));
     onClose();
   };
 

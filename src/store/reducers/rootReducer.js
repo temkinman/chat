@@ -9,7 +9,8 @@ import {
   CHATS_FETCHED,
   SET_CURRENT_USER,
   OPEN_MODAL_RENAME_CHAT,
-  OPEN_CONFIRM_MODAL
+  OPEN_CONFIRM_MODAL,
+  ADDED_NEW_CHAT
 } from "../constants";
 import produce from "immer";
 import { combineReducers } from "redux";
@@ -61,7 +62,10 @@ const chatsReducer = (state = initialState.chats, action) => {
       return produce(state, (draftState) => {
         draftState[action.id] = newChat;
       });
-
+    case ADDED_NEW_CHAT:
+      return produce(state, (draftState) => {
+        draftState[action.newChat.id] = action.newChat;
+      });
     default:
       return state;
   }

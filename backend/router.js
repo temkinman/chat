@@ -164,6 +164,7 @@ router.post("/signup", async (ctx) => {
 
 router.post("/chats", async (ctx) => {
   try {
+    debugger
     const currentUserId = state.currentUser;
 
     if (currentUserId > 0) {
@@ -282,8 +283,8 @@ router.post("/", async (ctx) => {
           message: `Chat ${chatTitle} added`,
           success: true,
         };
-        ctx.body = result;
-        console.log("result", result);
+        ctx.body = newChat;
+        // console.log("result", result);
       } else {
         console.log(`Chat ${chatTitle} is exist`);
         result = {
