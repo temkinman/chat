@@ -267,11 +267,12 @@ const createNewChat = (chatTitle) => {
 };
 
 router.patch('/chats/:chatId', async (ctx) => {
-  const chatId = ctx.request.params['chatId'].slice(1);
+  const chatId = ctx.request.params['chatId'];
   console.log('chatId', chatId);
   const chatTitle = ctx.request.body.title;
   console.log('chatTitle', chatTitle);
   state.chats[chatId].title = chatTitle;
+  console.log('chats', state.chats);
   ctx.body = state.chats[chatId];
 })
 
