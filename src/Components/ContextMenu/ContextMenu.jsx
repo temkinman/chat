@@ -6,7 +6,12 @@ import { openContextMenuAction } from "../../store/actions/chatAction";
 import { openRenameChatAction } from "../../store/actions/openRenameChatAction";
 import RenameChat from "./../RenameChat/RenameChat";
 
-const ContextMenu = ({ contextMenuList, isActive, positionMenu, onChooseHandle }) => {
+const ContextMenu = ({
+  contextMenuList,
+  isActive,
+  positionMenu,
+  onChooseHandle,
+}) => {
   const isOpen = useSelector((state) => state.renameChatModal);
   const dispatch = useDispatch();
 
@@ -18,8 +23,6 @@ const ContextMenu = ({ contextMenuList, isActive, positionMenu, onChooseHandle }
     e.preventDefault();
     dispatch(openContextMenuAction(false));
   };
-
-  
 
   return (
     <>

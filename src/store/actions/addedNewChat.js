@@ -12,7 +12,7 @@ const addedNewChat = (titleChat) => {
       });
       return await response.json();
     }
-    const newChat = await postData("http://localhost:3000/", {
+    const newChat = await postData("http://localhost:3000/chats", {
       type: "ADD_CHAT",
       title: titleChat,
     });

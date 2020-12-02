@@ -162,10 +162,10 @@ router.post("/signup", async (ctx) => {
   }
 });
 
-router.post("/chats", async (ctx) => {
+router.get("/chats", async (ctx) => {
   try {
-    debugger
     const currentUserId = state.currentUser;
+    // const currentUserId = ctx.body.id;
 
     if (currentUserId > 0) {
       ctx.body = getChats(currentUserId);
@@ -181,6 +181,7 @@ router.post("/chat/:chatId", async (ctx) => {
   try {
     const currentUserId = state.currentUser;
     const { chatId, title } = ctx.request.body;
+    console.log("renaming chat....", title);
     if (chatId in state.chats) {
       state.chats[chatId].title = title;
       ctx.body = getChats(currentUserId);
@@ -265,26 +266,31 @@ const createNewChat = (chatTitle) => {
   };
 };
 
-router.post("/", async (ctx) => {
+router.patch('/chats/:chatId', async (ctx) => {
+  const chatId = ctx.request.params['chatId'].slice(1);
+  console.log('chatId', chatId);
+  const chatTitle = ctx.request.body.title;
+  console.log('chatTitle', chatTitle);
+  state.chats[chatId].title = chatTitle;
+  ctx.body = state.chats[chatId];
+})
+
+router.post("/chats", async (ctx) => {
   const type = ctx.request.body.type;
   const chatTitle = ctx.request.body.title;
   const chatId = ctx.request.body.id;
   let result;
-  
+
   switch (type) {
     case "ADD_CHAT":
       if (!isExistChat(state, chatTitle)) {
         const newChat = createNewChat(chatTitle);
 
+        console.log('adding chat...')
         state = { ...state, chats: { ...state.chats, [newChat.id]: newChat } };
         state.users[state.currentUser].chatIds.push(newChat.id);
 
-        result = {
-          message: `Chat ${chatTitle} added`,
-          success: true,
-        };
         ctx.body = newChat;
-        // console.log("result", result);
       } else {
         console.log(`Chat ${chatTitle} is exist`);
         result = {

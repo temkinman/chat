@@ -12,10 +12,13 @@ const ContextMenuContainer = ({ contextMenuList, positionMenu }) => {
   const list = [
     { title: "rename chat", action: () => openRenameChatAction(true) },
     { title: "delete chat", action: () => console.log("deleting chat ...") },
-    { title: "clear history", action: () => console.log("clearing history ...") },
+    {
+      title: "clear history",
+      action: () => console.log("clearing history ..."),
+    },
   ];
   //["rename chat", "delete chat", "clear history"]
-  
+
   const onClose = () => {
     console.log("onClosing....");
   };

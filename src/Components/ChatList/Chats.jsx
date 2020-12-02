@@ -11,6 +11,7 @@ import RenameChat from "../RenameChat/RenameChat";
 import ConfirmModal from "../ConfirmModal/ConfirmModal";
 import { openConfirmAction } from "../../store/actions/openConfirmAction";
 import { chatsFetched } from "../../store/actions/chatsFetched";
+import renamedChat from "../../store/actions/renamedChat";
 // import axios from "axios";
 
 const Chats = () => {
@@ -58,13 +59,8 @@ const Chats = () => {
     return await response.json();
   }
 
-  async function changeChatName(title) {
-    const chatsResponse = changeData(
-      `http://localhost:3000/chat/:${currentChatId}`,
-      { chatId: currentChatId, title, currentUserId },
-      "POST"
-    );
-    dispatch(chatsFetched(await chatsResponse));
+  const changeChatName = async (title) => {
+    dispatch(renamedChat(title, currentChatId));
   }
 
   async function deleteChat(currentChatId) {  
