@@ -165,7 +165,6 @@ router.post("/signup", async (ctx) => {
 router.get("/chats", async (ctx) => {
   try {
     const currentUserId = state.currentUser;
-    // const currentUserId = ctx.body.id;
 
     if (currentUserId > 0) {
       ctx.body = getChats(currentUserId);
@@ -177,34 +176,19 @@ router.get("/chats", async (ctx) => {
   }
 });
 
-router.post("/chat/:chatId", async (ctx) => {
+router.delete("/chats/:chatId", async (ctx) => {
   try {
     const currentUserId = state.currentUser;
-    const { chatId, title } = ctx.request.body;
-    console.log("renaming chat....", title);
-    if (chatId in state.chats) {
-      state.chats[chatId].title = title;
-      ctx.body = getChats(currentUserId);
-    }
-  } catch (err) {
-    ctx.status = err.status || 500;
-    ctx.body = err.message;
-    ctx.app.emit("error", err, ctx);
-  }
-});
+    const chatId = +ctx.request.params["chatId"];
 
-//DELETE /chat/:chatId
-router.delete("/chat/:chatId", async (ctx) => {
-  try {
-    const chatId = ctx.request.params.chatId;
-    const currentUserId = state.currentUser;
+    const userChats = state.users[currentUserId].chatIds;
+    const chatInd = userChats.findIndex((item) => item === chatId);
 
-    if (chatId in state.chats) {
-      let currentChats = state.users[currentUserId].chatIds;
-      const indChat = currentChats.findIndex((item) => item === chatId);
-      currentChats.splice(indChat, 1);
-      ctx.body = getChats(currentUserId);
+    if (chatInd > -1) {
+      userChats.splice(chatInd, 1);
     }
+
+    ctx.body = chatId;
   } catch (err) {
     ctx.status = err.status || 500;
     ctx.body = err.message;
@@ -266,55 +250,74 @@ const createNewChat = (chatTitle) => {
   };
 };
 
-router.patch('/chats/:chatId', async (ctx) => {
-  const chatId = ctx.request.params['chatId'];
-  console.log('chatId', chatId);
+/*rename chat*/
+router.patch("/chats/:chatId", async (ctx) => {
+  const chatId = ctx.request.params["chatId"];
   const chatTitle = ctx.request.body.title;
-  console.log('chatTitle', chatTitle);
+
   state.chats[chatId].title = chatTitle;
-  console.log('chats', state.chats);
   ctx.body = state.chats[chatId];
-})
+});
+
+/*send message*/
+router.put("/chats/:chatId", async (ctx) => {
+  /*const currentChat = state[action.currentChatId];
+      if (currentChat.draft === "") return;
+
+      const newMessage = {
+        time: new Date(),
+        from: currentChat.title,
+        text: currentChat.draft,
+        messageId: action.messageId,
+      };
+
+      return produce(state, (draftState) => {
+        draftState[action.currentChatId].messages.unshift(newMessage);
+        draftState[action.currentChatId].draft = "";
+      });*/
+  const type = ctx.request.body.type;
+  const currentChatId = ctx.request.params["chatId"];
+
+  switch (type) {
+    case "SEND_MESSAGE":
+      console.log("sending message to ", currentChatId);
+      const userName = state.users[state.currentUser].title;
+
+      const newMessage = {
+        time: new Date(),
+        from: userName,
+        text: state.chats[currentChatId].draft,
+        messageId: generateId(),
+      };
+      state.chats[currentChatId].messages.push(newMessage);
+      state.chats[currentChatId].draft = "";
+      ctx.body = newMessage;
+      break;
+    case "DRAFT_CHANGE":
+      const newText = ctx.request.body.text;
+      state.chats[currentChatId].draft = newText;
+      break;
+    default:
+      ctx.body = null;
+  }
+});
 
 router.post("/chats", async (ctx) => {
   const type = ctx.request.body.type;
   const chatTitle = ctx.request.body.title;
-  const chatId = ctx.request.body.id;
-  let result;
 
   switch (type) {
     case "ADD_CHAT":
       if (!isExistChat(state, chatTitle)) {
         const newChat = createNewChat(chatTitle);
 
-        console.log('adding chat...')
         state = { ...state, chats: { ...state.chats, [newChat.id]: newChat } };
         state.users[state.currentUser].chatIds.push(newChat.id);
 
         ctx.body = newChat;
       } else {
         console.log(`Chat ${chatTitle} is exist`);
-        result = {
-          message: `Chat ${chatTitle} is exist`,
-          success: false,
-        };
-        ctx.body = result;
       }
-      // ctx.body = state;
-      break;
-    case "DELETE_CHAT":
-      const userChats = state.users[state.currentUser].userChats;
-      const ind = userChats.findIndex((item) => item === +chatId);
-
-      if (ind > -1) {
-        userChats.splice(ind, 1);
-      }
-
-      ctx.body = state;
-      break;
-    case "RENAME_CHAT":
-      state.chats[chatId].title = chatTitle;
-      ctx.body = state;
       break;
     default:
       ctx.body = state;

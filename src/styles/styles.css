@@ -19,7 +19,8 @@ ul {
 .containerApp {
   display: flex;
   flex-wrap: nowrap;
-  width: 1200px;
+  /* max-width: 1200px; */
+  min-width: 900px;
   justify-content: center;
   height: 100%;
 }
@@ -113,8 +114,6 @@ ul {
   overflow: auto;
   max-height: 107vh;
 }
-
-
 
 .active .contacts-name {
   color: white;

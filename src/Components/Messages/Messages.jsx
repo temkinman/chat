@@ -5,7 +5,6 @@ import s from "./Messages.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { draftChangeAction } from "../../store/actions/draftChangeAction";
 import { sendMessageAction } from "../../store/actions/messageAction";
-import NoSelectedChat from "./NoSelectedChat";
 
 const Messages = ({ getTime, currentChatId }) => {
   const currentChat = useSelector((state) => state.chats)[currentChatId];

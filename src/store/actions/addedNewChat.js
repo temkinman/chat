@@ -1,4 +1,4 @@
-import { ADDED_NEW_CHAT } from "../constants";
+import { ADDED_NEW_CHAT, ADD_CHAT } from "../constants";
 
 const addedNewChat = (titleChat) => {
   return async (dispatch) => {
@@ -13,7 +13,7 @@ const addedNewChat = (titleChat) => {
       return await response.json();
     }
     const newChat = await postData("http://localhost:3000/chats", {
-      type: "ADD_CHAT",
+      type: ADD_CHAT,
       title: titleChat,
     });
     dispatch({

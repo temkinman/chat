@@ -10,7 +10,11 @@ import {
   SET_CURRENT_USER,
   OPEN_MODAL_RENAME_CHAT,
   OPEN_CONFIRM_MODAL,
-  ADDED_NEW_CHAT
+  ADDED_NEW_CHAT,
+  RENAMED_CHAT,
+  DELETED_CHAT,
+  SENT_MESSAGE,
+  DRAFT_CHANGED,
 } from "../constants";
 import produce from "immer";
 import { combineReducers } from "redux";
@@ -21,6 +25,8 @@ const currentChatReducer = (state = initialState.currentChatId, action) => {
       return action.chatId;
     case ADD_CHAT:
       return action.id;
+    case DELETED_CHAT:
+      return action.chatId;
     default:
       return state;
   }
@@ -35,36 +41,44 @@ const chatsReducer = (state = initialState.chats, action) => {
       }, {});
     case SEND_MESSAGE:
       const currentChat = state[action.currentChatId];
-      if (currentChat.draft === "") return;
+      // if (currentChat.draft === "") return;
 
-      const newMessage = {
-        time: new Date(),
-        from: currentChat.title,
-        text: currentChat.draft,
-        messageId: action.messageId,
-      };
+      // const newMessage = {
+      //   time: new Date(),
+      //   from: currentChat.title,
+      //   text: currentChat.draft,
+      //   messageId: action.messageId,
+      // };
 
+      // return produce(state, (draftState) => {
+      //   draftState[action.currentChatId].messages.unshift(newMessage);
+      //   draftState[action.currentChatId].draft = "";
+      // });
+      break;
+    case SENT_MESSAGE:
       return produce(state, (draftState) => {
-        draftState[action.currentChatId].messages.unshift(newMessage);
+        draftState[action.currentChatId].messages.push(action.newMessage);
         draftState[action.currentChatId].draft = "";
       });
     case DRAFT_CHANGE:
       return produce(state, (draftState) => {
         draftState[action.currentChatId].draft = action.text;
       });
-    case ADD_CHAT:
-      const newChat = {
-        id: action.id,
-        title: action.title,
-        messages: [],
-        draft: "",
-      };
+    case DRAFT_CHANGED:
       return produce(state, (draftState) => {
-        draftState[action.id] = newChat;
+        draftState[action.currentChatId].draft = action.draftText;
+      });
+    case DELETED_CHAT:
+      return produce(state, (draftState) => {
+        delete draftState[action.deletedChatId];
       });
     case ADDED_NEW_CHAT:
       return produce(state, (draftState) => {
         draftState[action.newChat.id] = action.newChat;
+      });
+    case RENAMED_CHAT:
+      return produce(state, (draftState) => {
+        draftState[action.newTitleChat.id].title = action.newTitleChat.title;
       });
     default:
       return state;
@@ -98,14 +112,17 @@ const currentUserReducer = (state = initialState.currentUser, action) => {
   }
 };
 
-const renameChatModalReducer = (state = initialState.renameChatModal, action) => {
+const renameChatModalReducer = (
+  state = initialState.renameChatModal,
+  action
+) => {
   switch (action.type) {
     case OPEN_MODAL_RENAME_CHAT:
       return action.renameChatModal;
     default:
       return state;
   }
-}
+};
 
 const confirmModalReducer = (state = initialState.confirmModal, action) => {
   switch (action.type) {
@@ -114,7 +131,7 @@ const confirmModalReducer = (state = initialState.confirmModal, action) => {
     default:
       return state;
   }
-}
+};
 
 const rootReducer = combineReducers({
   chats: chatsReducer,

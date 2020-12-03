@@ -16,7 +16,7 @@ const Chat = ({
   positionMenu,
   contextMenuList
 }) => {
-  const styleContact = `${s.item} ${isChatActive ? "active" : ""}`;
+  const styleContact = `${s.item} ${isChatActive ? `${s.activeChat}` : ""}`;
 
   return (
     <>

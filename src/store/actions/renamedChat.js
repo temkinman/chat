@@ -12,7 +12,7 @@ const renamedChat = (title, chatId) => {
       });
       return await response.json();
     }
-    const chatWithNewTitle = await patchData(
+    const newTitleChat = await patchData(
       `http://localhost:3000/chats/${chatId}`,
       {
         type: RENAMED_CHAT,
@@ -21,7 +21,7 @@ const renamedChat = (title, chatId) => {
     );
     dispatch({
       type: RENAMED_CHAT,
-      chatWithNewTitle,
+      newTitleChat,
     });
   };
 };

@@ -9,9 +9,9 @@
   background-color: #4a5561;
 }
 
-.active {
+.activeChat {
   cursor: pointer;
-  background-color: #314050;
+  background-color: #272f38;
 }
 
 .avatar {

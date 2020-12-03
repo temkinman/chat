@@ -4,14 +4,14 @@ import s from "./ConfirmModal.module.css";
 import { useDispatch } from "react-redux";
 import { openConfirmAction } from "../../store/actions/openConfirmAction";
 
-const ConfirmModal = ({ isOpen, questionText, actionHandle, currentChatId  }) => {
+const ConfirmModal = ({ isOpen, questionText, actionWithChat, currentChatId  }) => {
   const dispatch = useDispatch();
 
   const onSubmitFormHandle = (event) => {
     event.preventDefault();
     dispatch(openConfirmAction(false));
-    console.log('actionHandle ',actionHandle)
-    actionHandle(currentChatId);
+    // console.log('actionHandle ',actionHandle)
+    actionWithChat(currentChatId);
   };
 
   const onClose = () => {
